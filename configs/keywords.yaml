@@ -1,0 +1,263 @@
+# LockWatch 关键词矩阵配置
+# 维护口径：6 品牌（含传音系合并）× 7 语种
+# 命中规则：brand_term AND (topic_term OR any security_term) 入库
+# 语种：en 英 / zh 中 / hi 印地 / th 泰 / ar 阿 / ru 俄 / es 西
+
+version: 1
+
+# ========================================
+# 品牌清单
+# ========================================
+brands:
+
+  - id: xiaomi
+    display: 小米
+    merge_aliases:
+      - Redmi
+      - POCO
+    terms:
+      en: [Xiaomi, Redmi, POCO, "Mi phone", HyperOS, MIUI]
+      zh: [小米, 红米, Redmi, POCO, 澎湃OS, HyperOS, MIUI]
+      hi: ["शाओमी", "रेडमी", "शाओमी फोन"]
+      th: ["เสียวหมี่", "เรดมี่", "เสียวมี่"]
+      ar: ["شاومي", "ريدمي", "شاومي ريدمي"]
+      ru: [Xiaomi, "Сяоми", Redmi, "Редми", POCO, HyperOS]
+      es: [Xiaomi, Redmi, POCO, HyperOS]
+
+  - id: samsung
+    display: 三星
+    terms:
+      en: [Samsung, Galaxy, "One UI", "Galaxy S", "Galaxy A", "Galaxy Z", "Galaxy M", "Galaxy Fold", "Galaxy Flip"]
+      zh: [三星, Galaxy, 盖乐世, "三星手机", OneUI, "One UI"]
+      hi: ["सैमसंग", "गैलेक्सी", "सैमसंग फोन"]
+      th: ["ซัมซุง", "กาแล็กซี่", Galaxy]
+      ar: ["سامسونج", "جالاكسي", Galaxy]
+      ru: [Samsung, "Самсунг", Galaxy, "Галакси", "One UI"]
+      es: [Samsung, Galaxy, "One UI"]
+
+  - id: oppo
+    display: OPPO
+    merge_aliases:
+      - OnePlus
+      - Realme
+    terms:
+      en: [OPPO, OnePlus, Realme, ColorOS, "Find X", "Reno", "A series OPPO"]
+      zh: [OPPO, 一加, OnePlus, 真我, Realme, ColorOS, "Find X", Reno]
+      hi: ["ओप्पो", "वनप्लस", "रियलमी", "ओप्पो फोन"]
+      th: ["ออปโป้", "วันพลัส", "เรียลมี", OPPO, OnePlus, Realme]
+      ar: ["أوبو", "ون بلس", "ريلمي", OPPO, OnePlus, Realme]
+      ru: [OPPO, "ОППО", OnePlus, "Ван Плюс", Realme, "Реалми", ColorOS]
+      es: [OPPO, OnePlus, Realme, ColorOS]
+
+  - id: vivo
+    display: vivo
+    merge_aliases:
+      - iQOO
+    terms:
+      en: [vivo, iQOO, "Funtouch OS", "OriginOS", "Y series vivo", "V series vivo", "X series vivo"]
+      zh: [vivo, iQOO, 爱酷, OriginOS, 原系统, FuntouchOS]
+      hi: ["वीवो", "वीवो फोन", iQOO]
+      th: ["วีโว่", vivo, iQOO]
+      ar: ["فيفو", "في في او", vivo, iQOO]
+      ru: [vivo, "Виво", iQOO, "АйКу", OriginOS]
+      es: [vivo, iQOO, OriginOS, "Funtouch OS"]
+
+  - id: honor
+    display: 荣耀
+    terms:
+      en: [HONOR, "Honor Magic", "Honor X", "Honor 200", "MagicOS"]
+      zh: [荣耀, Honor, MagicOS, "荣耀Magic", "荣耀X"]
+      hi: ["ऑनर", HONOR, "ऑनर फोन"]
+      th: ["ออเนอร์", HONOR, "ออนเนอร์"]
+      ar: ["هونر", HONOR, "هونر ماجيك"]
+      ru: [HONOR, "Хонор", "Хонор Мэджик", MagicOS]
+      es: [HONOR, "Honor Magic", MagicOS]
+
+  - id: transsion
+    display: 传音系 (TECNO / Infinix / itel 合并)
+    merge_aliases:
+      - TECNO
+      - Infinix
+      - itel
+    count_rule: merged   # 任一子品牌命中都归到 transsion 单一计数单位
+    terms:
+      en: [TECNO, Infinix, itel, Camon, Spark, Phantom, "Infinix Note", "Infinix Hot", "Infinix Zero", "itel A", "itel S", HiOS, XOS]
+      zh: [传音, TECNO, Infinix, itel, Camon, Spark, Phantom, HiOS, XOS]
+      hi: ["टेक्नो", "इंफिनिक्स", "आईटेल", TECNO, Infinix, itel]
+      th: ["เทคโน", "อินฟินิกซ์", "ไอเทล", TECNO, Infinix, itel]
+      ar: ["تكنو", "انفنكس", TECNO, Infinix, itel, "فانتوم", "كامون"]
+      ru: [TECNO, "Текно", Infinix, "Инфиникс", itel, "Айтел", Camon, Spark]
+      es: [TECNO, Infinix, itel, Camon, Spark, Phantom]
+
+# ========================================
+# 议题词 topic_term
+# 品牌词 AND 议题词 高相关
+# ========================================
+topics:
+
+  launch:
+    label: 新品发布
+    en: [launch, launched, unveiled, debut, release, "official announcement", "goes on sale", "price revealed"]
+    zh: [发布, 上市, 开售, 官宣, 首发, 新机]
+    hi: ["लॉन्च", "रिलीज़", "अनावरण"]
+    th: ["เปิดตัว", "วางจำหน่าย", "ราคาเปิดตัว"]
+    ar: ["إطلاق", "الكشف عن", "طرح", "السعر الرسمي"]
+    ru: ["анонс", "презентация", "релиз", "поступил в продажу"]
+    es: ["lanzamiento", "presentación", "debut", "a la venta"]
+
+  leak:
+    label: 泄密 / 爆料
+    en: [leak, leaked, rumor, render, "spec sheet", "hands-on leak", "live image"]
+    zh: [曝光, 爆料, 泄露, 渲染图, 谍照, "真机图"]
+    hi: ["लीक", "अफवाह", "रेंडर"]
+    th: ["หลุด", "ข่าวลือ", "ภาพเรนเดอร์"]
+    ar: ["تسريب", "صور مسربة", "شائعات"]
+    ru: ["утечка", "слив", "рендеры", "слухи"]
+    es: ["filtración", "rumor", "render", "imagen filtrada"]
+
+  pricing:
+    label: 价格 / 降价
+    en: ["price cut", discount, "price drop", "sale price", "flash sale", "promo"]
+    zh: [降价, 促销, 优惠, 特价, "限时折扣"]
+    hi: ["कीमत", "छूट", "मूल्य कटौती"]
+    th: ["ลดราคา", "ราคาพิเศษ", "โปรโมชั่น"]
+    ar: ["خصم", "تخفيض السعر", "عرض خاص"]
+    ru: ["скидка", "снижение цены", "распродажа"]
+    es: ["descuento", "rebaja", "oferta", "precio especial"]
+
+  review:
+    label: 评测
+    en: [review, hands-on, "first impression", "long-term review", "camera test", "battery life"]
+    zh: [评测, 上手, 体验, 测评, "深度体验"]
+    hi: ["समीक्षा", "रिव्यू"]
+    th: ["รีวิว", "ประสบการณ์ใช้งาน"]
+    ar: ["مراجعة", "تجربة الاستخدام"]
+    ru: ["обзор", "первые впечатления", "тест камеры"]
+    es: ["análisis", "reseña", "primeras impresiones"]
+
+  certification:
+    label: 认证 / 入网
+    en: [certification, FCC, BIS, TDRA, NBTC, TKDN, Anatel, "type approval", "equipment authorization"]
+    zh: [认证, 入网, FCC, 工信部, "型号核准"]
+    hi: ["प्रमाणन", BIS, "सर्टिफिकेशन"]
+    th: ["รับรอง", "กสทช", NBTC]
+    ar: ["اعتماد", "شهادة", TDRA, "هيئة الاتصالات"]
+    ru: ["сертификация", "ЕАЭС", Rostest]
+    es: ["homologación", "certificación", Anatel]
+
+  quality_issue:
+    label: 质量 / 投诉 / 召回
+    en: [defect, recall, complaint, "quality issue", bootloop, bricked, overheating, "screen crack", "battery swell"]
+    zh: [质量问题, 投诉, 召回, 翻车, 变砖, 死机, "屏幕问题", "电池鼓包"]
+    hi: ["दोष", "वापस बुलाना", "शिकायत"]
+    th: ["ปัญหา", "ร้องเรียน", "เรียกคืน"]
+    ar: ["عيب", "شكوى", "استدعاء المنتج"]
+    ru: ["дефект", "отзыв", "жалоба", "брак"]
+    es: ["defecto", "retirada", "queja", "problema de calidad"]
+
+  software:
+    label: 系统升级 / OS
+    en: ["Android 15", "Android 16", "One UI 7", "One UI 8", "HyperOS 2", "ColorOS 15", "OriginOS 5", "MagicOS 9", "HiOS 15", "XOS 15", update, rollout, "security patch"]
+    zh: ["安卓15", "安卓16", HyperOS, ColorOS, OriginOS, MagicOS, 系统更新, 推送, 安全补丁]
+    hi: ["एंड्रॉइड 15", "अपडेट", "सुरक्षा पैच"]
+    th: ["อัปเดต", "แอนดรอยด์ 15", "แพตช์ความปลอดภัย"]
+    ar: ["تحديث", "اندرويد 15", "تحديث الأمان"]
+    ru: ["обновление", "Андроид 15", "патч безопасности"]
+    es: ["actualización", "Android 15", "parche de seguridad"]
+
+# ========================================
+# 安全 / 锁机 议题词 security_term
+# 单独命中也入库，用于「锁机 / 安全风控」专栏
+# ========================================
+security:
+  label: 锁机 / 安全风控
+  en:
+    - "device lock"
+    - "lock device"
+    - "anti-theft"
+    - "stolen phone"
+    - "theft tracking"
+    - "Find My Device"
+    - "remote lock"
+    - "bricked"
+    - "anti-rollback"
+    - "bootloader lock"
+    - "FRP lock"
+    - "factory reset protection"
+    - "activation lock"
+    - "IMEI blacklist"
+    - "stolen database"
+    - "parts pairing"
+    - "unauthorized repair"
+  zh:
+    - 锁机
+    - 防盗
+    - "远程锁定"
+    - "设备锁"
+    - "开机验证"
+    - "激活锁"
+    - "IMEI 黑名单"
+    - "Bootloader 锁"
+    - "FRP 锁"
+    - "刷机变砖"
+    - "维修配件锁"
+  hi:
+    - "चोरी हुआ फोन"
+    - "डिवाइस लॉक"
+    - "रिमोट लॉक"
+    - "एंटी थेफ्ट"
+  th:
+    - "โทรศัพท์หาย"
+    - "ล็อกเครื่อง"
+    - "ป้องกันการโจรกรรม"
+    - "ล็อกระยะไกล"
+  ar:
+    - "قفل الجهاز"
+    - "الهاتف المسروق"
+    - "قفل عن بعد"
+    - "منع السرقة"
+    - "القائمة السوداء IMEI"
+  ru:
+    - "блокировка устройства"
+    - "украденный телефон"
+    - "удалённая блокировка"
+    - "защита от кражи"
+    - "FRP блокировка"
+    - "чёрный список IMEI"
+  es:
+    - "bloqueo del dispositivo"
+    - "teléfono robado"
+    - "bloqueo remoto"
+    - "antirrobo"
+    - "lista negra IMEI"
+    - "bloqueo FRP"
+
+# ========================================
+# 入库规则
+# ========================================
+match_rules:
+  primary:
+    description: 品牌 AND (议题 OR 安全)
+    expression: "brands.terms AND (topics.terms OR security.terms)"
+  security_only:
+    description: 仅命中 security 进入「锁机 / 安全风控」专栏，不绑定品牌
+    expression: "security.terms"
+  dedupe:
+    by: [canonical_url, title_hash]
+    window_hours: 48
+  min_relevance_score: 0.6
+
+# ========================================
+# 看板映射（九模块 topic 归属）
+# 用于 V14 看板模块的 bucket 归属
+# ========================================
+board_buckets:
+  "01-热点速览": [launch, leak]
+  "02-品牌动向": [launch, software, review]
+  "03-价格信号": [pricing]
+  "04-舆情风向": [review, quality_issue]
+  "05-泄密情报": [leak]
+  "06-监管认证": [certification]
+  "07-锁机安全": [security]
+  "08-系统生态": [software]
+  "09-风险告警": [quality_issue, security]

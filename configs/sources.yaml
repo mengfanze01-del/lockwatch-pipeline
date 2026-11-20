@@ -1,0 +1,774 @@
+# LockWatch 抓取源站配置
+# 维护口径：国外站点 · 6 品牌（小米 / 三星 / OPPO / vivo / 荣耀 / 传音系合并）× 7 语种
+# 更新频率：每日 09:00 / 21:00（Asia/Shanghai）两次
+# 字段说明：
+#   id          : 源站唯一标识，kebab-case
+#   name        : 展示名
+#   category    : official | social | forum | media | ecommerce | regulator | review
+#   region      : global | in | id | th | ph | vn | mea | ru | latam | eu
+#   lang        : 主要语种，ISO 639-1
+#   fetch_type  : rss | html | api | sitemap | search
+#   url         : 抓取入口；search 型给查询模板，{q} 占位
+#   enabled     : 是否启用
+#   rate_limit  : 每轮最多抓取条目（0 表示无上限）
+#   notes       : 备注
+
+version: 1
+timezone: Asia/Shanghai
+schedule:
+  - "0 9 * * *"
+  - "0 21 * * *"
+
+# ========================================
+# 快照归档配置（#88 确认保留期 1 年）
+# ========================================
+archive:
+  retention_days: 365
+  snapshot_times: ["09:00", "21:00"]
+  naming: "v-{date}-{am|pm}.html"
+  storage: fds
+  manifest: "manifest.json"   # 索引文件，供 V14 页面历史翻页组件读取
+
+sources:
+
+  # ============ 官方媒体 / 官网新闻区 ============
+  - id: xiaomi-global-blog
+    name: Xiaomi Global Blog
+    category: official
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://blog.mi.com/en/feed/
+    enabled: true
+    rate_limit: 50
+
+  - id: samsung-newsroom-global
+    name: Samsung Global Newsroom
+    category: official
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://news.samsung.com/global/feed
+    enabled: true
+    rate_limit: 50
+
+  - id: samsung-newsroom-in
+    name: Samsung India Newsroom
+    category: official
+    region: in
+    lang: en
+    fetch_type: html
+    url: https://news.samsung.com/in/
+    enabled: true
+    rate_limit: 50
+
+  - id: oppo-global-newsroom
+    name: OPPO Global Newsroom
+    category: official
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://www.oppo.com/en/newsroom/
+    enabled: true
+    rate_limit: 50
+
+  - id: vivo-global-news
+    name: vivo Global News
+    category: official
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://www.vivo.com/en/about-vivo/news
+    enabled: true
+    rate_limit: 50
+
+  - id: honor-global-news
+    name: HONOR Global News
+    category: official
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://www.honor.com/global/news/
+    enabled: true
+    rate_limit: 50
+
+  - id: tecno-global-news
+    name: TECNO Mobile News
+    category: official
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://www.tecno-mobile.com/news/
+    enabled: true
+    rate_limit: 50
+
+  - id: infinix-global-news
+    name: Infinix Mobile News
+    category: official
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://www.infinixmobility.com/news
+    enabled: true
+    rate_limit: 50
+
+  - id: itel-global-news
+    name: itel Mobile News
+    category: official
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://www.itel-mobile.com/global/news/
+    enabled: true
+    rate_limit: 50
+
+  # ============ 国际科技媒体 ============
+  - id: gsmarena-news
+    name: GSMArena News
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.gsmarena.com/rss-news-reviews.php3
+    enabled: true
+    rate_limit: 80
+
+  - id: androidauthority
+    name: Android Authority
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.androidauthority.com/feed/
+    enabled: true
+    rate_limit: 80
+
+  - id: androidpolice
+    name: Android Police
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.androidpolice.com/feed/
+    enabled: true
+    rate_limit: 80
+
+  - id: 9to5google
+    name: 9to5Google
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://9to5google.com/feed/
+    enabled: true
+    rate_limit: 80
+
+  - id: xda-developers
+    name: XDA Developers
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.xda-developers.com/feed/
+    enabled: true
+    rate_limit: 80
+
+  - id: theverge-mobile
+    name: The Verge - Mobile
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.theverge.com/rss/mobile/index.xml
+    enabled: true
+    rate_limit: 50
+
+  - id: engadget-mobile
+    name: Engadget Mobile
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.engadget.com/rss.xml
+    enabled: true
+    rate_limit: 50
+
+  - id: techcrunch-mobile
+    name: TechCrunch Mobile
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://techcrunch.com/category/mobile/feed/
+    enabled: true
+    rate_limit: 50
+
+  # ============ 区域科技媒体（印度 / 东南亚 / MEA / 俄 / 拉美）============
+  - id: 91mobiles
+    name: 91mobiles (India)
+    category: media
+    region: in
+    lang: en
+    fetch_type: rss
+    url: https://www.91mobiles.com/hub/feed/
+    enabled: true
+    rate_limit: 80
+
+  - id: gadgets360
+    name: Gadgets 360 (India)
+    category: media
+    region: in
+    lang: en
+    fetch_type: rss
+    url: https://www.gadgets360.com/rss/news
+    enabled: true
+    rate_limit: 80
+
+  - id: smartprix
+    name: Smartprix (India)
+    category: media
+    region: in
+    lang: en
+    fetch_type: html
+    url: https://www.smartprix.com/bytes/
+    enabled: true
+    rate_limit: 50
+
+  - id: mysmartprice
+    name: MySmartPrice News
+    category: media
+    region: in
+    lang: en
+    fetch_type: rss
+    url: https://www.mysmartprice.com/gear/feed/
+    enabled: true
+    rate_limit: 50
+
+  - id: ndtv-gadgets-hi
+    name: NDTV Gadgets (Hindi)
+    category: media
+    region: in
+    lang: hi
+    fetch_type: html
+    url: https://gadgets.ndtv.com/hindi/
+    enabled: true
+    rate_limit: 50
+
+  - id: droidsans
+    name: DroidSans (Thailand)
+    category: media
+    region: th
+    lang: th
+    fetch_type: html
+    url: https://droidsans.com/
+    enabled: true
+    rate_limit: 50
+
+  - id: beartai
+    name: beartai (Thailand)
+    category: media
+    region: th
+    lang: th
+    fetch_type: rss
+    url: https://www.beartai.com/feed
+    enabled: true
+    rate_limit: 50
+
+  - id: specphone
+    name: SpecPhone (Thailand)
+    category: media
+    region: th
+    lang: th
+    fetch_type: html
+    url: https://specphone.com/
+    enabled: true
+    rate_limit: 50
+
+  - id: gizmochina
+    name: Gizmochina
+    category: media
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.gizmochina.com/feed/
+    enabled: true
+    rate_limit: 80
+
+  - id: hitech-mail-ru
+    name: Hi-Tech Mail.ru
+    category: media
+    region: ru
+    lang: ru
+    fetch_type: rss
+    url: https://hi-tech.mail.ru/rss/all/
+    enabled: true
+    rate_limit: 50
+
+  - id: 4pda
+    name: 4PDA (Russia)
+    category: media
+    region: ru
+    lang: ru
+    fetch_type: rss
+    url: https://4pda.to/feed/
+    enabled: true
+    rate_limit: 50
+
+  - id: trashbox
+    name: Trashbox (Russia)
+    category: media
+    region: ru
+    lang: ru
+    fetch_type: rss
+    url: https://trashbox.ru/rss
+    enabled: true
+    rate_limit: 50
+
+  - id: xataka-movil
+    name: Xataka Movil (ES)
+    category: media
+    region: latam
+    lang: es
+    fetch_type: rss
+    url: https://www.xatakamovil.com/index.xml
+    enabled: true
+    rate_limit: 50
+
+  - id: andro4all
+    name: Andro4all (ES)
+    category: media
+    region: latam
+    lang: es
+    fetch_type: rss
+    url: https://andro4all.com/feed
+    enabled: true
+    rate_limit: 50
+
+  - id: gizmodo-es
+    name: Gizmodo en Espanol
+    category: media
+    region: latam
+    lang: es
+    fetch_type: rss
+    url: https://es.gizmodo.com/rss
+    enabled: true
+    rate_limit: 50
+
+  - id: alarabiya-tech
+    name: Al Arabiya Tech (AR)
+    category: media
+    region: mea
+    lang: ar
+    fetch_type: html
+    url: https://www.alarabiya.net/technology
+    enabled: true
+    rate_limit: 50
+
+  - id: aitnews
+    name: AITnews (AR)
+    category: media
+    region: mea
+    lang: ar
+    fetch_type: rss
+    url: https://aitnews.com/feed/
+    enabled: true
+    rate_limit: 50
+
+  - id: unlockboot-ar
+    name: UnlockBoot Arabic
+    category: media
+    region: mea
+    lang: ar
+    fetch_type: html
+    url: https://www.unlockboot.com/ar/
+    enabled: true
+    rate_limit: 50
+
+  # ============ 社交媒体 / 短视频 ============
+  - id: x-search-brand
+    name: X (Twitter) brand keyword search
+    category: social
+    region: global
+    lang: en
+    fetch_type: search
+    url: https://x.com/search?q={q}&f=live
+    enabled: true
+    rate_limit: 100
+    notes: 需 X API 或授权 cookie；按 keywords.yaml 展开
+
+  - id: reddit-android
+    name: r/Android
+    category: social
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.reddit.com/r/Android/.rss
+    enabled: true
+    rate_limit: 100
+
+  - id: reddit-xiaomi
+    name: r/Xiaomi
+    category: social
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.reddit.com/r/Xiaomi/.rss
+    enabled: true
+    rate_limit: 100
+
+  - id: reddit-samsung
+    name: r/samsung
+    category: social
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.reddit.com/r/samsung/.rss
+    enabled: true
+    rate_limit: 100
+
+  - id: reddit-oppo
+    name: r/oppo
+    category: social
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.reddit.com/r/oppo/.rss
+    enabled: true
+    rate_limit: 50
+
+  - id: reddit-vivo
+    name: r/vivo
+    category: social
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.reddit.com/r/vivo/.rss
+    enabled: true
+    rate_limit: 50
+
+  - id: reddit-honor
+    name: r/Honor
+    category: social
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.reddit.com/r/Honor/.rss
+    enabled: true
+    rate_limit: 50
+
+  - id: reddit-tecno
+    name: r/TecnoMobile
+    category: social
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.reddit.com/r/TecnoMobile/.rss
+    enabled: true
+    rate_limit: 50
+
+  - id: youtube-search-brand
+    name: YouTube brand keyword search
+    category: social
+    region: global
+    lang: en
+    fetch_type: search
+    url: https://www.youtube.com/results?search_query={q}&sp=CAI%253D
+    enabled: true
+    rate_limit: 50
+    notes: 按 keywords.yaml 展开；sp 参数按上传时间排序
+
+  - id: tiktok-search-brand
+    name: TikTok brand keyword search
+    category: social
+    region: global
+    lang: en
+    fetch_type: search
+    url: https://www.tiktok.com/search?q={q}
+    enabled: true
+    rate_limit: 50
+
+  # ============ 论坛 / UGC ============
+  - id: xda-forum-xiaomi
+    name: XDA Forum - Xiaomi
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://xdaforums.com/c/xiaomi.12144/
+    enabled: true
+    rate_limit: 50
+
+  - id: xda-forum-samsung
+    name: XDA Forum - Samsung
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://xdaforums.com/c/samsung.11901/
+    enabled: true
+    rate_limit: 50
+
+  - id: xda-forum-oppo
+    name: XDA Forum - OPPO
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://xdaforums.com/c/oppo.12272/
+    enabled: true
+    rate_limit: 50
+
+  - id: xda-forum-vivo
+    name: XDA Forum - vivo
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://xdaforums.com/c/vivo.12349/
+    enabled: true
+    rate_limit: 50
+
+  - id: xda-forum-honor
+    name: XDA Forum - HONOR
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://xdaforums.com/c/honor.12486/
+    enabled: true
+    rate_limit: 50
+
+  - id: xda-forum-tecno
+    name: XDA Forum - TECNO
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://xdaforums.com/c/tecno.12735/
+    enabled: true
+    rate_limit: 50
+
+  - id: mi-community-global
+    name: Xiaomi Mi Community (Global)
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://new.c.mi.com/global/
+    enabled: true
+    rate_limit: 50
+
+  - id: samsung-members-global
+    name: Samsung Members Community
+    category: forum
+    region: global
+    lang: en
+    fetch_type: html
+    url: https://r2.community.samsung.com/
+    enabled: true
+    rate_limit: 50
+
+  # ============ 流媒体 / 测评 ============
+  - id: mkbhd-channel
+    name: MKBHD (YouTube)
+    category: review
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.youtube.com/feeds/videos.xml?user=marquesbrownlee
+    enabled: true
+    rate_limit: 20
+
+  - id: mrwhosetheboss
+    name: Mrwhosetheboss (YouTube)
+    category: review
+    region: global
+    lang: en
+    fetch_type: rss
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCMiJRAwDNSNzuYeN2uWa0pA
+    enabled: true
+    rate_limit: 20
+
+  - id: geekyranjit
+    name: Geekyranjit (YouTube, India)
+    category: review
+    region: in
+    lang: en
+    fetch_type: rss
+    url: https://www.youtube.com/feeds/videos.xml?user=geekyranjit
+    enabled: true
+    rate_limit: 20
+
+  - id: technical-guruji
+    name: Technical Guruji (Hindi)
+    category: review
+    region: in
+    lang: hi
+    fetch_type: rss
+    url: https://www.youtube.com/feeds/videos.xml?user=TechnicalGurujiOfficial
+    enabled: true
+    rate_limit: 20
+
+  # ============ 电商 / 价格信号 ============
+  - id: amazon-in-mobile-newreleases
+    name: Amazon.in Mobiles - New Releases
+    category: ecommerce
+    region: in
+    lang: en
+    fetch_type: html
+    url: https://www.amazon.in/gp/new-releases/electronics/1389401031/
+    enabled: true
+    rate_limit: 30
+
+  - id: flipkart-mobile-newarrivals
+    name: Flipkart Mobiles - New Arrivals
+    category: ecommerce
+    region: in
+    lang: en
+    fetch_type: html
+    url: https://www.flipkart.com/mobiles/pr?sid=tyy,4io&sort=recency_desc
+    enabled: true
+    rate_limit: 30
+
+  - id: shopee-th-mobile
+    name: Shopee TH - Mobile
+    category: ecommerce
+    region: th
+    lang: th
+    fetch_type: html
+    url: https://shopee.co.th/Mobile-Gadgets-cat.11013247
+    enabled: true
+    rate_limit: 30
+
+  - id: lazada-id-mobile
+    name: Lazada ID - Mobile
+    category: ecommerce
+    region: id
+    lang: id
+    fetch_type: html
+    url: https://www.lazada.co.id/shop-mobiles/
+    enabled: true
+    rate_limit: 30
+
+  - id: jumia-ng-phones
+    name: Jumia Nigeria - Phones
+    category: ecommerce
+    region: mea
+    lang: en
+    fetch_type: html
+    url: https://www.jumia.com.ng/mobile-phones/
+    enabled: true
+    rate_limit: 30
+
+  # ============ 监管 / 认证 / 泄密 ============
+  - id: fcc-equipment-auth
+    name: FCC Equipment Authorization
+    category: regulator
+    region: global
+    lang: en
+    fetch_type: search
+    url: https://apps.fcc.gov/oetcf/eas/reports/GenericSearchResult.cfm?RequestTimeout=500&ApplicantID={q}
+    enabled: true
+    rate_limit: 20
+    notes: 按品牌 Applicant ID 展开
+
+  - id: tdra-uae
+    name: TDRA UAE Type Approval
+    category: regulator
+    region: mea
+    lang: en
+    fetch_type: html
+    url: https://eservices.tdra.gov.ae/EquipmentRegistration/EquipmentSearch
+    enabled: true
+    rate_limit: 10
+
+  - id: bis-india
+    name: BIS India Registration
+    category: regulator
+    region: in
+    lang: en
+    fetch_type: html
+    url: https://www.bis.gov.in/
+    enabled: true
+    rate_limit: 10
+
+  - id: tkdn-id
+    name: TKDN Indonesia
+    category: regulator
+    region: id
+    lang: id
+    fetch_type: html
+    url: https://tkdn.kemenperin.go.id/
+    enabled: true
+    rate_limit: 10
+
+  - id: nbtc-th
+    name: NBTC Thailand
+    category: regulator
+    region: th
+    lang: th
+    fetch_type: html
+    url: https://mocheck.nbtc.go.th/
+    enabled: true
+    rate_limit: 10
+
+  - id: anatel-br
+    name: Anatel Brazil
+    category: regulator
+    region: latam
+    lang: es
+    fetch_type: html
+    url: https://sistemas.anatel.gov.br/sch/
+    enabled: true
+    rate_limit: 10
+
+  - id: rostest-ru
+    name: Rostest / EAC Russia
+    category: regulator
+    region: ru
+    lang: ru
+    fetch_type: html
+    url: https://pub.fsa.gov.ru/rds/declaration
+    enabled: true
+    rate_limit: 10
+
+  # ============ 泄密 / 爆料账号聚合 ============
+  - id: evleaks-x
+    name: Evan Blass (X)
+    category: social
+    region: global
+    lang: en
+    fetch_type: search
+    url: https://x.com/evleaks
+    enabled: true
+    rate_limit: 30
+
+  - id: ishanagarwal24
+    name: Ishan Agarwal (X)
+    category: social
+    region: global
+    lang: en
+    fetch_type: search
+    url: https://x.com/ishanagarwal24
+    enabled: true
+    rate_limit: 30
+
+  - id: onleaks
+    name: OnLeaks (X)
+    category: social
+    region: global
+    lang: en
+    fetch_type: search
+    url: https://x.com/OnLeaks
+    enabled: true
+    rate_limit: 30
+
+  - id: yogeshbrar
+    name: Yogesh Brar (X)
+    category: social
+    region: in
+    lang: en
+    fetch_type: search
+    url: https://x.com/heyitsyogesh
+    enabled: true
+    rate_limit: 30
