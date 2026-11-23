@@ -167,7 +167,7 @@ topics:
 
 # ========================================
 # 安全 / 锁机 议题词 security_term
-# 单独命中也入库，用于「锁机 / 安全风控」专栏
+# 须与品牌词组合命中：品牌词 ×（议题词 OR 锁机安全词）
 # ========================================
 security:
   label: 锁机 / 安全风控
@@ -237,11 +237,8 @@ security:
 # ========================================
 match_rules:
   primary:
-    description: 品牌 AND (议题 OR 安全)
+    description: 小米锁机等条线统一口径：品牌词 ×（议题词 OR 锁机安全词）
     expression: "brands.terms AND (topics.terms OR security.terms)"
-  security_only:
-    description: 仅命中 security 进入「锁机 / 安全风控」专栏，不绑定品牌
-    expression: "security.terms"
   dedupe:
     by: [canonical_url, title_hash]
     window_hours: 48
