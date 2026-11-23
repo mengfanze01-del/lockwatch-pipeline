@@ -1,0 +1,1132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>锁机行业舆情监控 · 每日看板</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f6f2;
+    --surface:#ffffff;
+    --ink:#121417;
+    --ink-2:#3a3f46;
+    --ink-3:#6a7079;
+    --ink-4:#9aa0aa;
+    --line:#e5e3dd;
+    --line-strong:#cfccc3;
+    --accent:#b7301d;
+    --accent-2:#1f3a63;
+    --hot:#c0392b;
+    --live:#0f8a5f;
+    --ev:#8a5a00;
+    --xm:#c23a1a;
+    --th:#0f6b4a;
+    --serif:"Noto Serif SC","Source Han Serif SC",Georgia,serif;
+    --sans:"Inter","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;margin:0}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 28px 80px}
+
+  /* Masthead */
+  .mast{border-bottom:1px solid var(--line-strong);padding-bottom:18px;margin-bottom:22px}
+  .mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-mark{width:34px;height:34px;background:var(--accent);display:grid;place-items:center;color:#fff;font-family:var(--serif);font-weight:700;font-size:20px;line-height:1}
+  .brand-name{font-family:var(--serif);font-weight:700;font-size:28px;letter-spacing:-.01em;line-height:1.05}
+  .mast-meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;padding-bottom:6px}
+  .mast-meta b{color:var(--ink-2);font-weight:600;margin-left:6px;letter-spacing:.04em;text-transform:none;font-family:var(--sans);font-size:12px}
+  .mast-rule{height:3px;background:var(--ink);margin-top:18px;position:relative}
+  .mast-rule::after{content:"";position:absolute;right:0;top:0;width:120px;height:3px;background:var(--accent)}
+
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+  .kpi{padding:16px 18px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;border-radius:2px}
+  .kpi-lbl{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase}
+  .kpi-val{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1}
+  .kpi-foot{font-size:11.5px;color:var(--ink-3)}
+  .kpi-foot .up{color:var(--live)}
+  .kpi-foot .dn{color:var(--hot)}
+
+  /* Section head */
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-top:2px solid var(--ink);padding-top:10px;margin-bottom:8px;flex-wrap:wrap}
+  .sec-left{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .sec-no{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.14em}
+  .sec-title{font-family:var(--serif);font-size:19px;font-weight:700;letter-spacing:-.005em}
+  .sec-count{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .stack{display:flex;flex-direction:column;gap:36px}
+  .mod{min-width:0}
+  .mod.col-feed .sec-head{border-top-color:var(--accent-2)}
+  .mod.col-th   .sec-head{border-top-color:var(--th)}
+  .mod.col-xm   .sec-head{border-top-color:var(--xm)}
+
+  /* 行布局 */
+  .rows{display:flex;flex-direction:column}
+  .row{
+    display:grid;
+    grid-template-columns:
+      96px
+      minmax(0,1fr)
+      minmax(0,1.8fr)
+      150px
+      108px
+      92px;
+    gap:14px;
+    align-items:start;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+  }
+  .row:first-child{border-top:none}
+  .row:hover{background:#fbfaf6}
+
+  .r-time{font-family:var(--mono);font-size:12.5px;color:var(--ink);font-weight:600;letter-spacing:.02em;white-space:nowrap;padding-top:3px}
+  .r-body{display:contents}
+  .r-title{font-family:var(--serif);font-size:15.5px;font-weight:700;line-height:1.4;letter-spacing:-.003em;color:var(--ink);padding-top:3px;word-break:break-word;overflow-wrap:anywhere;display:block}
+  a.r-title{cursor:pointer}
+  a.r-title:hover{color:var(--accent-2)}
+  .r-summary{font-size:12px;color:var(--ink-3);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;cursor:help;padding-top:3px;min-width:0}
+  .r-summary:hover{color:var(--ink-2)}
+  .r-src{font-size:12.5px;color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-top:3px}
+  .r-tags{display:flex;gap:4px;flex-wrap:wrap;padding-top:3px;align-content:flex-start}
+  .tag{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.01em;border:1px solid var(--line);padding:1px 5px;border-radius:2px;background:#fafaf7;white-space:nowrap;line-height:1.5}
+  .tag::before{content:"#";color:var(--ink-4);margin-right:1px}
+  .r-act{display:flex;gap:4px;justify-content:flex-end;padding-top:1px}
+  .btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line-strong);padding:3px 7px;border-radius:2px;background:#fff;cursor:pointer;white-space:nowrap;display:inline-block;line-height:1.4}
+  .btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary:hover{background:var(--accent);border-color:var(--accent)}
+  .btn.disabled{color:var(--ink-4);cursor:not-allowed;background:#fafaf7;border-color:var(--line)}
+  .btn.disabled:hover{background:#fafaf7;color:var(--ink-4);border-color:var(--line)}
+
+  .row-head{
+    display:grid;
+    grid-template-columns:96px minmax(0,1fr) minmax(0,1.8fr) 150px 108px 92px;
+    gap:14px;
+    padding:6px 0 8px;
+    border-bottom:1px solid var(--line-strong);
+    font-family:var(--mono);font-size:10px;color:var(--ink-4);letter-spacing:.14em;text-transform:uppercase;
+  }
+  .row-head div:last-child{text-align:right}
+
+  /* module foot */
+  .mod-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);flex-wrap:wrap;gap:10px}
+  .pager{display:flex;gap:2px;font-family:var(--mono);font-size:11px}
+  .pager span,.pager a{padding:4px 8px;color:var(--ink-3);border:1px solid var(--line);background:#fff;border-radius:2px;cursor:pointer;user-select:none}
+  .pager .cur{background:var(--ink);color:#fff;border-color:var(--ink);cursor:default}
+  .pager .dots{color:var(--ink-4);cursor:default;border-color:transparent;background:transparent}
+  .pager .nav.disabled{color:var(--ink-4);cursor:not-allowed;background:#fafaf7}
+  .pager a:hover:not(.disabled){border-color:var(--ink-2);color:var(--ink)}
+  .mod-foot-note{font-family:var(--mono);font-size:10.5px;color:var(--ink-4);letter-spacing:.08em;text-transform:uppercase}
+
+  @media (max-width:980px){
+    .row,.row-head{grid-template-columns:72px minmax(0,1fr) 120px}
+    .row > .r-summary,.row > .r-tags,.row > .r-act,.row-head > div:nth-child(3),.row-head > div:nth-child(5),.row-head > div:nth-child(6){display:none}
+  }
+
+  .page-foot{margin-top:50px;padding-top:16px;border-top:2px solid var(--ink);font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* 详情抽屉（站内详情页的 mock 形态） */
+  .drawer-mask{position:fixed;inset:0;background:rgba(10,12,16,.45);display:none;z-index:50}
+  .drawer-mask.open{display:block}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,94vw);background:var(--surface);box-shadow:-4px 0 28px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .22s ease;z-index:60;display:flex;flex-direction:column}
+  .drawer.open{transform:translateX(0)}
+  .drawer-head{padding:22px 26px 14px;border-bottom:1px solid var(--line-strong);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+  .drawer-head h3{margin:0;font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.4;color:var(--ink);flex:1}
+  .drawer-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-3);padding:4px 8px;line-height:1}
+  .drawer-close:hover{color:var(--ink)}
+  .drawer-meta{display:flex;flex-wrap:wrap;gap:6px 22px;padding:12px 26px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+  .drawer-meta b{color:var(--ink-2);font-weight:600;margin-left:6px;font-family:var(--sans);font-size:12px;text-transform:none;letter-spacing:0}
+  .drawer-tags{display:flex;gap:4px;flex-wrap:wrap;padding:12px 26px;border-bottom:1px solid var(--line)}
+  .drawer-body{flex:1;overflow:auto;padding:22px 26px;font-size:13.8px;line-height:1.78;color:var(--ink-2);font-family:var(--sans)}
+  .drawer-foot{padding:14px 26px;border-top:1px solid var(--line-strong);display:flex;gap:10px;justify-content:flex-end;background:#fbfaf6}
+  .btn.lg{font-size:12px;padding:8px 14px;letter-spacing:.08em}
+
+  /* View switch */
+  .view-switch{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:3px}
+  .vs-tabs{display:flex;gap:4px}
+  .vs-tab{font-family:var(--sans);font-size:12.5px;padding:6px 14px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-2);cursor:pointer;border-radius:2px;font-weight:500}
+  .vs-tab:hover{border-color:var(--ink-2)}
+  .vs-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .vs-filter{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+  .vs-filter label{display:flex;align-items:center;gap:8px}
+  .vs-filter input[type=date]{font-family:var(--mono);font-size:12px;padding:4px 8px;border:1px solid var(--line-strong);border-radius:2px;background:#fff;color:var(--ink);text-transform:none;letter-spacing:0}
+  .vs-filter .btn{font-size:10.5px;padding:4px 10px}
+  .row.today{background:#fffbea}
+  .row.today:hover{background:#fff6d1}
+  .row.today .r-time::before{content:"● ";color:var(--accent);margin-right:2px}
+  .mod.hidden{display:none}
+  .row.hidden{display:none}
+  .mod-empty{padding:18px 0;color:var(--ink-4);font-size:12.5px;text-align:center;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <div class="mast-row">
+      <div class="brand">
+        <div class="brand-mark">锁</div>
+        <div>
+          <div class="brand-name">锁机行业舆情监控</div>
+        </div>
+      </div>
+      <div class="mast-meta">
+        <div>数据日期 <b id="meta-date">2026-11-23</b></div>
+        <div>截至 <b id="meta-time">11-23 08:00 CST</b></div>
+        <div>采集源 <b>12</b></div>
+        <div>今日新增 <b id="meta-today-count">0</b></div>
+      </div>
+    </div>
+    <div class="mast-rule"></div>
+  </header>
+
+  <!-- VIEW SWITCH -->
+  <section class="view-switch">
+    <div class="vs-tabs" role="tablist">
+      <button class="vs-tab active" data-view="today">今日新增</button>
+      <button class="vs-tab" data-view="all">累积归档</button>
+    </div>
+    <div class="vs-filter">
+      <label>日期筛选
+        <input type="date" id="dateFilter" value="">
+      </label>
+      <button class="btn" id="dateReset">重置</button>
+    </div>
+  </section>
+
+  <!-- KPI STRIP -->
+  <section class="kpis">
+    <div class="kpi"><div class="kpi-lbl">本期动态</div><div class="kpi-val">18</div><div class="kpi-foot"><span class="up">▲ 5</span> 环比上期</div></div>
+    <div class="kpi"><div class="kpi-lbl">近一月累计</div><div class="kpi-val">327</div><div class="kpi-foot">覆盖 8 大栏目</div></div>
+    <div class="kpi"><div class="kpi-lbl">高危数量</div><div class="kpi-val">2</div><div class="kpi-foot"><span class="dn">▲ 1</span> 破解锁机相关</div></div>
+    <div class="kpi"><div class="kpi-lbl">负面声量</div><div class="kpi-val">14</div><div class="kpi-foot"><span class="dn">▲ 3</span> 小米锁机相关</div></div>
+  </section>
+
+  <div class="stack">
+
+    <!-- 01 今日信息流 -->
+    <section class="mod col-feed" data-mod="01" data-total="29" data-month="142">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">01</span><span class="sec-title">今日信息流</span></div>
+        <span class="sec-count">近一月 142 · 本页 5 / 29</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23 07:12</div>
+          <div class="r-body">
+            <div class="r-title" title="M-KOPA 以 1.1 亿美元完成对 KilpiTek 收购,锁机能力整合至非洲 PAYG 平台">M-KOPA 以 1.1 亿美元完成对 KilpiTek 收购,锁机能力整合至非洲 PAYG 平台</div>
+            <div class="r-summary" title="M-KOPA 官方公告显示本次交易以现金加股份合计约 1.1 亿美元完成,收购完成后 KilpiTek 的锁机 SDK、分期合约引擎与催收链路将统一整合进 M-KOPA 平台,直接把东非活跃 PAYG 终端集中度推高至双强格局;非洲多家运营商与渠道商表态关注锁机互操作性,行业预期后续议价结构将出现一轮重排。">M-KOPA 官方公告显示本次交易以现金加股份合计约 1.1 亿美元完成,收购完成后 KilpiTek 的锁机 SDK、分期合约引擎与催收链路将统一整合进 M-KOPA 平台,直接把东非活跃 PAYG 终端集中度推高至双强格局;非洲多家运营商与渠道商表态关注锁机互操作性,行业预期后续议价结构将出现一轮重排。</div>
+          </div>
+          <div class="r-src" data-url="https://m-kopa.com/press/2026-kilpitek-acquisition">M-KOPA Press</div>
+          <div class="r-tags"><span class="tag">M-KOPA</span><span class="tag">PAYG</span><span class="tag">非洲</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-22 22:40</div>
+          <div class="r-body">
+            <div class="r-title" title="FCA 发布《消费者分期设备责任条款》草案,拟限制远程停用触发条件">FCA 发布《消费者分期设备责任条款》草案,拟限制远程停用触发条件</div>
+            <div class="r-summary" title="英国金融行为监管局针对消费者分期设备发布专项条款草案征求意见,首次把远程停用的触发条件、消费者书面告知、可撤回窗口和单次锁机时长写进监管文本;草案将于 2027Q1 开启为期 12 周的公开咨询,意见直接决定明年欧洲运营商与金融机构的合同重写节奏,业内认为是从披露型监管转向合约型监管的拐点信号。">英国金融行为监管局针对消费者分期设备发布专项条款草案征求意见,首次把远程停用的触发条件、消费者书面告知、可撤回窗口和单次锁机时长写进监管文本;草案将于 2027Q1 开启为期 12 周的公开咨询,意见直接决定明年欧洲运营商与金融机构的合同重写节奏,业内认为是从披露型监管转向合约型监管的拐点信号。</div>
+          </div>
+          <div class="r-src" data-url="https://www.fca.org.uk/publications/consultation-papers/cp26-consumer-credit-devices">FCA.gov.uk</div>
+          <div class="r-tags"><span class="tag">FCA</span><span class="tag">分期合规</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-17 18:05</div>
+          <div class="r-body">
+            <div class="r-title" title="苹果 iOS 19.2 Beta 将丢失模式自动锁延长至 60 天,激活锁机制同步升级">苹果 iOS 19.2 Beta 将"丢失模式自动锁"延长至 60 天,激活锁机制同步升级</div>
+            <div class="r-summary" title="iOS 19.2 Beta 把丢失模式下的自动锁定窗口由 30 天拉长至 60 天,Find My 服务端与激活锁同步升级,取消条件变得更严格;业内担心二手翻新窗口被动延长会放大渠道价差、拉动灰产刷机需求,但同时也抬高了整个苹果生态的被盗设备二次流通门槛,官方修复描述未提及二手市场。">iOS 19.2 Beta 把丢失模式下的自动锁定窗口由 30 天拉长至 60 天,Find My 服务端与激活锁同步升级,取消条件变得更严格;业内担心二手翻新窗口被动延长会放大渠道价差、拉动灰产刷机需求,但同时也抬高了整个苹果生态的被盗设备二次流通门槛,官方修复描述未提及二手市场。</div>
+          </div>
+          <div class="r-src" data-url="https://9to5mac.com/2026/11/17/ios-19-2-beta-lost-mode-60-days">9to5Mac</div>
+          <div class="r-tags"><span class="tag">Apple</span><span class="tag">激活锁</span><span class="tag">iOS19</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-17 14:20</div>
+          <div class="r-body">
+            <div class="r-title" title="MTN 与三星 Knox Guard 续签三年协议,覆盖南非与加纳分期渠道">MTN 与三星 Knox Guard 续签三年协议,覆盖南非与加纳分期渠道</div>
+            <div class="r-summary" title="MTN 集团向投资者披露与三星 Knox Guard 续签三年合作协议,新版协议新增批量告警 API 与按批次告警节奏控制,优先覆盖南非与加纳的分期销售渠道;该续签基本锁死了三星在非洲运营商侧的主导位,也为其它锁机方案进入非洲市场设置了明确的时间窗约束。">MTN 集团向投资者披露与三星 Knox Guard 续签三年合作协议,新版协议新增批量告警 API 与按批次告警节奏控制,优先覆盖南非与加纳的分期销售渠道;该续签基本锁死了三星在非洲运营商侧的主导位,也为其它锁机方案进入非洲市场设置了明确的时间窗约束。</div>
+          </div>
+          <div class="r-src" data-url="https://investors.mtn.com/announcements/2026-11-knox-guard-renewal">MTN Investor</div>
+          <div class="r-tags"><span class="tag">MTN</span><span class="tag">Knox</span><span class="tag">非洲</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-17 11:08</div>
+          <div class="r-body">
+            <div class="r-title" title="Telegram 渠道出现 Knox Guard 解锁 报价帖,单台 45 USD">Telegram 渠道出现 "Knox Guard 解锁" 报价帖,单台 45 USD</div>
+            <div class="r-summary" title="监测到 Telegram 多个中英文频道同期出现单台 45 美元的 Knox Guard 解锁报价,话术结构、截图模板、支付通道高度一致,疑为同一团伙组织化外包;其中部分帖子已经开始冒用小米、三星售后名义引流,风险从单点技术迁移到品牌层面,建议纳入本期品牌保护重点处置清单。">监测到 Telegram 多个中英文频道同期出现单台 45 美元的 Knox Guard 解锁报价,话术结构、截图模板、支付通道高度一致,疑为同一团伙组织化外包;其中部分帖子已经开始冒用小米、三星售后名义引流,风险从单点技术迁移到品牌层面,建议纳入本期品牌保护重点处置清单。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/telegram-redacted/knox-guard-unlock-2026-11-17">Telegram 脱敏</div>
+          <div class="r-tags"><span class="tag">Telegram</span><span class="tag">话术</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot">
+        <div class="mod-foot-note">每页 5 条 · 从新到旧</div>
+        <nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>…</a><a>29</a><a>›</a></nav>
+      </div>
+    </section>
+
+    <!-- 02 今日泰国锁机 -->
+    <section class="mod col-th" data-mod="02" data-total="4" data-month="19">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">02</span><span class="sec-title">今日泰国锁机</span></div>
+        <span class="sec-count">近一月 19 · 本页 5 / 4</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23 08:20</div>
+          <div class="r-body">
+            <div class="r-title" title="泰国央行 BOT 发布分期设备远程锁机指引草案">泰国央行 BOT 发布分期设备远程锁机指引草案</div>
+            <div class="r-summary" title="泰国央行 BOT 通过官网与行业协会同步发布分期设备远程锁机指引草案,要求金融机构与运营商在签约环节以泰语明确告知消费者锁机触发条件、单次锁机时长与申诉窗口;征求意见期 30 天,预计 2026 年底定稿。业内解读为泰国首次把锁机动作纳入消费金融监管语言,与英国 FCA 草案方向一致,但更侧重本地化告知与客诉。">泰国央行 BOT 通过官网与行业协会同步发布分期设备远程锁机指引草案,要求金融机构与运营商在签约环节以泰语明确告知消费者锁机触发条件、单次锁机时长与申诉窗口;征求意见期 30 天,预计 2026 年底定稿。业内解读为泰国首次把锁机动作纳入消费金融监管语言,与英国 FCA 草案方向一致,但更侧重本地化告知与客诉。</div>
+          </div>
+          <div class="r-src" data-url="https://www.bot.or.th/en/news/2026/device-lock-draft">BOT.or.th</div>
+          <div class="r-tags"><span class="tag">BOT</span><span class="tag">泰国</span><span class="tag">合规</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-17 20:15</div>
+          <div class="r-body">
+            <div class="r-title" title="AIS 与 True 推出新一代 4G/5G 分期锁机手机套餐,面向工薪阶层">AIS 与 True 推出新一代 4G/5G 分期锁机手机套餐,面向工薪阶层</div>
+            <div class="r-summary" title="AIS 与 True 几乎同期上线新一代分期锁机手机套餐,主打 5000-9000 泰铢档位,支持 24 期和 36 期并引入运营商侧远程锁机能力,目标客群为曼谷及东北部工薪阶层。两家都在官方 App 内加入泰语合规告知与锁机申诉入口,后续计划接入 BOT 指引要求的统一告知模板,业内预计将推动泰国中低端机型市场出现一轮锁机 SDK 装机高峰。">AIS 与 True 几乎同期上线新一代分期锁机手机套餐,主打 5000-9000 泰铢档位,支持 24 期和 36 期并引入运营商侧远程锁机能力,目标客群为曼谷及东北部工薪阶层。两家都在官方 App 内加入泰语合规告知与锁机申诉入口,后续计划接入 BOT 指引要求的统一告知模板,业内预计将推动泰国中低端机型市场出现一轮锁机 SDK 装机高峰。</div>
+          </div>
+          <div class="r-src" data-url="https://www.bangkokpost.com/business/telecom/2026-11-17-ais-true-installment">Bangkok Post</div>
+          <div class="r-tags"><span class="tag">AIS</span><span class="tag">True</span><span class="tag">分期</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-16 15:40</div>
+          <div class="r-body">
+            <div class="r-title" title="Lazada 与 Shopee 泰国站分期锁机手机销量破 10 万台">Lazada 与 Shopee 泰国站分期锁机手机销量破 10 万台</div>
+            <div class="r-summary" title="Lazada 与 Shopee 泰国站 Q4 以来分期锁机机型累计销量突破 10 万台,头部品牌包括三星、小米、OPPO 与本地品牌 Wiko,锁机 SDK 由 Samsung Knox Guard 和第三方平台共同支撑。平台数据显示,来自二三线城市的订单占比超过 60%,催收逾期率在接入锁机后下降约 14%,是泰国电商侧首次系统性披露锁机对分期风控的改善效果。">Lazada 与 Shopee 泰国站 Q4 以来分期锁机机型累计销量突破 10 万台,头部品牌包括三星、小米、OPPO 与本地品牌 Wiko,锁机 SDK 由 Samsung Knox Guard 和第三方平台共同支撑。平台数据显示,来自二三线城市的订单占比超过 60%,催收逾期率在接入锁机后下降约 14%,是泰国电商侧首次系统性披露锁机对分期风控的改善效果。</div>
+          </div>
+          <div class="r-src" data-url="https://www.nationthailand.com/business/2026-11-16-lazada-shopee-installment">The Nation</div>
+          <div class="r-tags"><span class="tag">Lazada</span><span class="tag">Shopee</span><span class="tag">电商</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-15 11:30</div>
+          <div class="r-body">
+            <div class="r-title" title="AIS Play / TrueID 开始把流媒体订阅与设备锁机状态联动">AIS Play / TrueID 开始把流媒体订阅与设备锁机状态联动</div>
+            <div class="r-summary" title="AIS Play 与 TrueID 近两周陆续更新 App,把流媒体订阅权益与设备锁机状态进行联动:设备被远程锁机时,高清与下载权益自动降级到标清流媒体,解锁后恢复。做法在东南亚属于较新的锁机变体,既规避了全停服务引发的强烈客诉,又对逾期客户形成持续提醒。业内关注该模式是否会被 Netflix 泰区、iFlix 等跨区域流媒体借鉴。">AIS Play 与 TrueID 近两周陆续更新 App,把流媒体订阅权益与设备锁机状态进行联动:设备被远程锁机时,高清与下载权益自动降级到标清流媒体,解锁后恢复。做法在东南亚属于较新的锁机变体,既规避了全停服务引发的强烈客诉,又对逾期客户形成持续提醒。业内关注该模式是否会被 Netflix 泰区、iFlix 等跨区域流媒体借鉴。</div>
+          </div>
+          <div class="r-src" data-url="https://www.ais.co.th/consumers/news/2026-11-15-streaming-lock">AIS / TrueID</div>
+          <div class="r-tags"><span class="tag">流媒体</span><span class="tag">AIS</span><span class="tag">TrueID</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-14 09:05</div>
+          <div class="r-body">
+            <div class="r-title" title="Bangkok Post 调查:泰国分期锁机手机二手市场升温,灰产以刷机规避锁机">Bangkok Post 调查:泰国分期锁机手机二手市场升温,灰产以刷机规避锁机</div>
+            <div class="r-summary" title="Bangkok Post 周报调查指出,随着泰国分期锁机手机装机量上升,曼谷和清迈的二手市场出现专门代解锁的服务,收费 1500-2500 泰铢,话术主要通过 LINE 和 Facebook Marketplace 引流;部分商家以刷机绕过锁机,损害 OEM 保修链路。报道还点名提醒消费者注意伪造的厂商售后账号,与本期社媒巡检发现的 Telegram 冒名话术趋势一致。">Bangkok Post 周报调查指出,随着泰国分期锁机手机装机量上升,曼谷和清迈的二手市场出现专门代解锁的服务,收费 1500-2500 泰铢,话术主要通过 LINE 和 Facebook Marketplace 引流;部分商家以刷机绕过锁机,损害 OEM 保修链路。报道还点名提醒消费者注意伪造的厂商售后账号,与本期社媒巡检发现的 Telegram 冒名话术趋势一致。</div>
+          </div>
+          <div class="r-src" data-url="https://www.bangkokpost.com/business/2026-11-14-second-hand-lock-bypass">Bangkok Post</div>
+          <div class="r-tags"><span class="tag">二手</span><span class="tag">灰产</span><span class="tag">LINE</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot"><div class="mod-foot-note">每页 5 条</div><nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>4</a><a>›</a></nav></div>
+    </section>
+
+    <!-- 03 小米锁机 -->
+    <section class="mod col-xm" data-mod="03" data-total="5" data-month="25">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">03</span><span class="sec-title">小米锁机</span></div>
+        <span class="sec-count">近一月 25 · 本页 5 / 5</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23 08:50</div>
+          <div class="r-body">
+            <div class="r-title" title="小米锁机 SDK 3.4 完成灰度,支持多币种分期合约锚点">小米锁机 SDK 3.4 完成灰度,支持多币种分期合约锚点</div>
+            <div class="r-summary" title="小米锁机 SDK 3.4 本周在印度、印尼、巴西三地完成全量灰度,核心变更是把国别规则表从客户端挪到服务端下发,并引入多币种分期合约锚点机制;合规响应速度从周级压缩到小时级,后续迭代聚焦于非洲 PAYG 场景的离线锁机链路。">小米锁机 SDK 3.4 本周在印度、印尼、巴西三地完成全量灰度,核心变更是把国别规则表从客户端挪到服务端下发,并引入多币种分期合约锚点机制;合规响应速度从周级压缩到小时级,后续迭代聚焦于非洲 PAYG 场景的离线锁机链路。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/mi-internal/product-daily/2026-11-18-sdk-3-4">小米产品日报</div>
+          <div class="r-tags"><span class="tag">SDK3.4</span><span class="tag">多币种</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-17 19:10</div>
+          <div class="r-body">
+            <div class="r-title" title="小米印度与 Bajaj Finance 达成锁机能力技术评估">小米印度与 Bajaj Finance 达成锁机能力技术评估</div>
+            <div class="r-summary" title="小米印度已与 Bajaj Finance 完成锁机能力技术评估第一阶段,重点验证 OTA 锁机链路在印度 4G/5G 混合网络下的到达率、客诉治理机制以及跨语言告知兼容性;若评估通过,将成为小米锁机能力在次级分期渠道落地的标杆案例,具备向 Bajaj Auto Finance 两轮车业务外溢的可能。">小米印度已与 Bajaj Finance 完成锁机能力技术评估第一阶段,重点验证 OTA 锁机链路在印度 4G/5G 混合网络下的到达率、客诉治理机制以及跨语言告知兼容性;若评估通过,将成为小米锁机能力在次级分期渠道落地的标杆案例,具备向 Bajaj Auto Finance 两轮车业务外溢的可能。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/mi-internal/india/2026-11-17-bajaj-finance">印度分部</div>
+          <div class="r-tags"><span class="tag">Bajaj</span><span class="tag">印度</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-15</div>
+          <div class="r-body">
+            <div class="r-title" title="基于地理围栏的分期设备自适应锁机 专利公开">"基于地理围栏的分期设备自适应锁机"专利公开</div>
+            <div class="r-summary" title="国知局公示一项基于地理围栏的分期设备自适应锁机方法专利,权利要求覆盖出口转售、跨境租赁、区域套利三类典型场景下的触发决策模型;该专利的实际意义在于把锁机动作与地理场景绑定,是国内厂商在跨境分期锁机方向上的首次系统性专利布局。">国知局公示一项基于地理围栏的分期设备自适应锁机方法专利,权利要求覆盖出口转售、跨境租赁、区域套利三类典型场景下的触发决策模型;该专利的实际意义在于把锁机动作与地理场景绑定,是国内厂商在跨境分期锁机方向上的首次系统性专利布局。</div>
+          </div>
+          <div class="r-src" data-url="https://cponline.cnipa.gov.cn/patent/2026-geofence-lock">国知局</div>
+          <div class="r-tags"><span class="tag">地理围栏</span><span class="tag">专利</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-14</div>
+          <div class="r-body">
+            <div class="r-title" title="合规团队启动欧盟 CRA 锁机能力评估专项">合规团队启动欧盟 CRA 锁机能力评估专项</div>
+            <div class="r-summary" title="合规团队已启动欧盟 CRA(Cyber Resilience Act)锁机能力评估专项,范围涵盖设备侧固件披露、云端服务披露以及与分期合约条款的交叉影响;计划在 2026Q4 内出具设备与云端双侧的差距分析报告,并形成面向欧盟经销渠道的分阶段合规路线图。">合规团队已启动欧盟 CRA(Cyber Resilience Act)锁机能力评估专项,范围涵盖设备侧固件披露、云端服务披露以及与分期合约条款的交叉影响;计划在 2026Q4 内出具设备与云端双侧的差距分析报告,并形成面向欧盟经销渠道的分阶段合规路线图。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/mi-internal/compliance/2026-11-14-cra-assessment">合规周报</div>
+          <div class="r-tags"><span class="tag">CRA</span><span class="tag">欧盟</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <!-- 来自原社媒巡检拆分:小米冒名诈骗(微信) -->
+        <div class="row">
+          <div class="r-time">11-14</div>
+          <div class="r-body">
+            <div class="r-title" title="小米分期机型 官方刷机 诈骗模式(微信侧)">小米分期机型"官方刷机"诈骗模式(微信侧)</div>
+            <div class="r-summary" title="微信侧出现以小米客服名义冒名要求用户支付 官方刷机解锁 服务费的诈骗模式,话术设计包括假客服工号、假企业微信样式和 PS 后的工单截图;目前投诉渠道已有零星案例上报,需要品牌保护与客服双侧联动预警。原属 07 社媒巡检,按主体对象分入小米锁机模块。">微信侧出现以小米客服名义冒名要求用户支付"官方刷机解锁"服务费的诈骗模式,话术设计包括假客服工号、假企业微信样式和 PS 后的工单截图;目前投诉渠道已有零星案例上报,需要品牌保护与客服双侧联动预警。原属 07 社媒巡检,按主体对象分入小米锁机模块。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/channel-redacted/wechat-xiaomi-impersonation-2026-11-14">渠道脱敏</div>
+          <div class="r-tags"><span class="tag">小米</span><span class="tag">冒名</span><span class="tag">微信</span><span class="tag">社媒</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot"><div class="mod-foot-note">每页 5 条</div><nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>4</a><a>5</a><a>›</a></nav></div>
+    </section>
+
+    <!-- 04 监管与合规 -->
+    <section class="mod" data-mod="04" data-total="5" data-month="21">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">04</span><span class="sec-title">监管与合规</span></div>
+        <span class="sec-count">近一月 21 · 本页 5 / 5</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23</div>
+          <div class="r-body">
+            <div class="r-title" title="FCA 消费者分期设备责任条款 草案,拟 2027Q1 咨询">FCA《消费者分期设备责任条款》草案,拟 2027Q1 咨询</div>
+            <div class="r-summary" title="草案核心是远程锁机的触发前置条件、消费者告知义务与可撤回窗口,并要求首次锁机不超过 72 小时且需人工复核;拟于 2027Q1 开启公开咨询,是全球首个把锁机动作要素写进金融监管条款的实例,将成为后续欧盟 CRA 与新兴市场本地监管的重要参考样本。">草案核心是远程锁机的触发前置条件、消费者告知义务与可撤回窗口,并要求首次锁机不超过 72 小时且需人工复核;拟于 2027Q1 开启公开咨询,是全球首个把锁机动作要素写进金融监管条款的实例,将成为后续欧盟 CRA 与新兴市场本地监管的重要参考样本。</div>
+          </div>
+          <div class="r-src" data-url="https://www.fca.org.uk/publications/consultation-papers/cp26-consumer-credit-devices">FCA</div>
+          <div class="r-tags"><span class="tag">FCA</span><span class="tag">72h</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-12</div>
+          <div class="r-body">
+            <div class="r-title" title="CRA 锁机能力披露要求将分两阶段生效">CRA 锁机能力披露要求将分两阶段生效</div>
+            <div class="r-summary" title="欧盟委员会官员在技术研讨会披露,CRA 对锁机能力的披露要求将分两阶段生效:第一阶段面向硬件厂商,覆盖固件层锁机能力和权限矩阵;第二阶段 2028 年起把服务商与云端能力纳入范围,意味着锁机相关 SDK 与云服务也将进入强制披露视野。">欧盟委员会官员在技术研讨会披露,CRA 对锁机能力的披露要求将分两阶段生效:第一阶段面向硬件厂商,覆盖固件层锁机能力和权限矩阵;第二阶段 2028 年起把服务商与云端能力纳入范围,意味着锁机相关 SDK 与云服务也将进入强制披露视野。</div>
+          </div>
+          <div class="r-src" data-url="https://commission.europa.eu/news/cra-lock-disclosure-phases-2026-11-12">欧盟委员会</div>
+          <div class="r-tags"><span class="tag">CRA</span><span class="tag">披露</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-10</div>
+          <div class="r-body">
+            <div class="r-title" title="CA AB-1234 第二读:要求锁机动作可独立于支付通路取消">CA AB-1234 第二读:要求锁机动作可独立于支付通路取消</div>
+            <div class="r-summary" title="加州 AB-1234 法案在第二读阶段加入新要求:无论支付通路是否仍处异常状态,消费者都应能通过厂商官方渠道独立申请取消锁机,同时厂商需保留 90 天证据链;若最终通过,北美市场的锁机 SOP 需要在客服和产品侧同步调整,涉及多家头部 OEM 和金融机构。">加州 AB-1234 法案在第二读阶段加入新要求:无论支付通路是否仍处异常状态,消费者都应能通过厂商官方渠道独立申请取消锁机,同时厂商需保留 90 天证据链;若最终通过,北美市场的锁机 SOP 需要在客服和产品侧同步调整,涉及多家头部 OEM 和金融机构。</div>
+          </div>
+          <div class="r-src" data-url="https://leginfo.legislature.ca.gov/bill/ab-1234-second-reading">CA Legis.</div>
+          <div class="r-tags"><span class="tag">加州</span><span class="tag">AB-1234</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-08</div>
+          <div class="r-body">
+            <div class="r-title" title="BACEN 对分期设备锁机 KYC 口径发函澄清">BACEN 对分期设备锁机 KYC 口径发函澄清</div>
+            <div class="r-summary" title="巴西央行就分期设备锁机的 KYC 认定口径发函澄清,重点解决被代理场景下的责任主体识别问题,厘清了运营商、金融机构、厂商三方的分担关系;预计巴西主要运营商和分期渠道将在 12 月中旬恢复推广节奏,为之前因口径模糊而推迟的几个合作项目扫清障碍。">巴西央行就分期设备锁机的 KYC 认定口径发函澄清,重点解决被代理场景下的责任主体识别问题,厘清了运营商、金融机构、厂商三方的分担关系;预计巴西主要运营商和分期渠道将在 12 月中旬恢复推广节奏,为之前因口径模糊而推迟的几个合作项目扫清障碍。</div>
+          </div>
+          <div class="r-src" data-url="https://www.bcb.gov.br/en/pressdetail/kyc-clarification-2026-11-08">BACEN</div>
+          <div class="r-tags"><span class="tag">BACEN</span><span class="tag">巴西</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-06</div>
+          <div class="r-body">
+            <div class="r-title" title="OJK 已将锁机能力纳入分期产品准入评估清单">OJK 已将锁机能力纳入分期产品准入评估清单</div>
+            <div class="r-summary" title="印度尼西亚 OJK 已把锁机能力作为分期产品准入评估清单的必填项,包括触发条件、告知机制、客诉处置 SOP 与第三方 SDK 的合规性四个维度;缺项将直接影响新品上市,对计划在印尼扩张的 OEM 和渠道商而言是明确的准入门槛。">印度尼西亚 OJK 已把锁机能力作为分期产品准入评估清单的必填项,包括触发条件、告知机制、客诉处置 SOP 与第三方 SDK 的合规性四个维度;缺项将直接影响新品上市,对计划在印尼扩张的 OEM 和渠道商而言是明确的准入门槛。</div>
+          </div>
+          <div class="r-src" data-url="https://www.ojk.go.id/en/news/2026-11-06-device-lock-approval-checklist">OJK</div>
+          <div class="r-tags"><span class="tag">OJK</span><span class="tag">印尼</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot"><div class="mod-foot-note">每页 5 条</div><nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>4</a><a>5</a><a>›</a></nav></div>
+    </section>
+
+    <!-- 05 区域市场 -->
+    <section class="mod" data-mod="05" data-total="4" data-month="19">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">05</span><span class="sec-title">区域市场</span></div>
+        <span class="sec-count">近一月 19 · 本页 5 / 4</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23</div>
+          <div class="r-body">
+            <div class="r-title" title="肯尼亚、乌干达 PAYG 终端集中度迈入 双强 格局">肯尼亚、乌干达 PAYG 终端集中度迈入"双强"格局</div>
+            <div class="r-summary" title="M-KOPA 完成对 KilpiTek 收购后,肯尼亚与乌干达 PAYG 终端集中度 CR2 跨过 60% 阈值,形成稳定的双强格局;其他玩家被迫选择绑定主导方的锁机栈,或者退出核心渠道,中小渠道商的议价空间显著收窄,行业议价结构进入重塑期。">M-KOPA 完成对 KilpiTek 收购后,肯尼亚与乌干达 PAYG 终端集中度 CR2 跨过 60% 阈值,形成稳定的双强格局;其他玩家被迫选择绑定主导方的锁机栈,或者退出核心渠道,中小渠道商的议价空间显著收窄,行业议价结构进入重塑期。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/editorial/payg-cr2-east-africa-2026-11-18">编辑部</div>
+          <div class="r-tags"><span class="tag">PAYG</span><span class="tag">CR2</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-16</div>
+          <div class="r-body">
+            <div class="r-title" title="印度次级分期渠道锁机 SDK 装机数破 8000 万">印度次级分期渠道锁机 SDK 装机数破 8000 万</div>
+            <div class="r-summary" title="印度次级分期渠道锁机 SDK 装机总量在 11 月破 8000 万台,主要增量来自南印两州的小额分期场景;锁机 SDK 正在从头部运营商向次级渠道普及,与 Bajaj Finance 等金融机构的合作意味着锁机能力正在被纳入消费金融风控的基础层。">印度次级分期渠道锁机 SDK 装机总量在 11 月破 8000 万台,主要增量来自南印两州的小额分期场景;锁机 SDK 正在从头部运营商向次级渠道普及,与 Bajaj Finance 等金融机构的合作意味着锁机能力正在被纳入消费金融风控的基础层。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/editorial/india-sdk-80m-2026-11-16">编辑部</div>
+          <div class="r-tags"><span class="tag">印度</span><span class="tag">SDK</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <!-- 来自原社媒巡检拆分:PAYG 刷机小组(Facebook/肯尼亚加纳) -->
+        <div class="row">
+          <div class="r-time">11-16</div>
+          <div class="r-body">
+            <div class="r-title" title="PAYG 设备刷机解锁 小组活跃度回升(Facebook/肯尼亚加纳)">"PAYG 设备刷机解锁"小组活跃度回升(Facebook/肯尼亚加纳)</div>
+            <div class="r-summary" title="Facebook 上数个 PAYG 设备刷机解锁小组活跃度连续两周回升,发帖集中在肯尼亚和加纳两地,内容主要是刷机教程、工具贩卖和二手回收报价;对 M-KOPA 收购后的新平台而言需要尽快关注,避免形成灰产口碑外溢。原属 07 社媒巡检,按区域主体分入 05 区域市场。">Facebook 上数个 PAYG 设备刷机解锁小组活跃度连续两周回升,发帖集中在肯尼亚和加纳两地,内容主要是刷机教程、工具贩卖和二手回收报价;对 M-KOPA 收购后的新平台而言需要尽快关注,避免形成灰产口碑外溢。原属 07 社媒巡检,按区域主体分入 05 区域市场。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/channel-redacted/fb-payg-flash-group-2026-11-16">渠道脱敏</div>
+          <div class="r-tags"><span class="tag">Facebook</span><span class="tag">非洲</span><span class="tag">灰产</span><span class="tag">社媒</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-14</div>
+          <div class="r-body">
+            <div class="r-title" title="印尼、菲律宾锁机合约样本进入行业参考模板库">印尼、菲律宾锁机合约样本进入行业参考模板库</div>
+            <div class="r-summary" title="编辑部与行业法律合作方整理了印尼、菲律宾两地共计 11 份已落地的锁机合约样本,并整合进跨境分期合规参考模板库;样本涵盖告知义务、触发条件、争议处理、数据跨境四个维度,可直接用于新兴市场的合约起草与本地化翻译。">编辑部与行业法律合作方整理了印尼、菲律宾两地共计 11 份已落地的锁机合约样本,并整合进跨境分期合规参考模板库;样本涵盖告知义务、触发条件、争议处理、数据跨境四个维度,可直接用于新兴市场的合约起草与本地化翻译。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/editorial/sea-contracts-2026-11-14">编辑部</div>
+          <div class="r-tags"><span class="tag">合约模板</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-18</div>
+          <div class="r-body">
+            <div class="r-title" title="欧洲本周无公开动态(已核对四项主口径)">欧洲本周无公开动态(已核对四项主口径)</div>
+            <div class="r-summary" title="本周已核对 FCA、ECB、BaFin、AMF 四项主口径的官方公告、新闻稿和研讨议程,均无与锁机相关的新公开动态;栏目保留占位以维持节奏,避免跳过给读者造成口径不完整的误判。">本周已核对 FCA、ECB、BaFin、AMF 四项主口径的官方公告、新闻稿和研讨议程,均无与锁机相关的新公开动态;栏目保留占位以维持节奏,避免跳过给读者造成口径不完整的误判。</div>
+          </div>
+          <div class="r-src">编辑部</div>
+          <div class="r-tags"><span class="tag">占位</span></div>
+          <div class="r-act"><button class="btn disabled" data-act="orig" title="无原文链接">—</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot"><div class="mod-foot-note">每页 5 条</div><nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>4</a><a>›</a></nav></div>
+    </section>
+
+    <!-- 06 技术与产品 -->
+    <section class="mod" data-mod="06" data-total="8" data-month="37">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">06</span><span class="sec-title">技术与产品</span></div>
+        <span class="sec-count">近一月 37 · 本页 5 / 8</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23</div>
+          <div class="r-body">
+            <div class="r-title" title="苹果激活锁 60 天窗口与 Find My 服务器同步升级">苹果激活锁 60 天窗口与 Find My 服务器同步升级</div>
+            <div class="r-summary" title="苹果激活锁 60 天窗口与 Find My 服务器同步升级,官方修复描述只强调反盗窃和隐私保护,没有提及二手市场;但业内普遍认为会拉长二手翻新窗口并推高渠道价差,灰产可能转向更难取证的刷机和证书绕过方案。">苹果激活锁 60 天窗口与 Find My 服务器同步升级,官方修复描述只强调反盗窃和隐私保护,没有提及二手市场;但业内普遍认为会拉长二手翻新窗口并推高渠道价差,灰产可能转向更难取证的刷机和证书绕过方案。</div>
+          </div>
+          <div class="r-src" data-url="https://9to5mac.com/2026/11/17/activation-lock-60-days-findmy">9to5Mac</div>
+          <div class="r-tags"><span class="tag">激活锁</span><span class="tag">iOS19</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-13</div>
+          <div class="r-body">
+            <div class="r-title" title="Google Device Management API v3 Preview 释出">Google Device Management API v3 Preview 释出</div>
+            <div class="r-summary" title="Google 在 Android Developers 博客释出 Device Management API v3 Preview,核心变更是提供粒度化锁机权限控制与设备状态审计接口,主要面向企业分期和小微商户场景;Preview 版本距离正式稳定还有半年左右,但方向上为 Android 阵营提供了更标准化的锁机能力底座。">Google 在 Android Developers 博客释出 Device Management API v3 Preview,核心变更是提供粒度化锁机权限控制与设备状态审计接口,主要面向企业分期和小微商户场景;Preview 版本距离正式稳定还有半年左右,但方向上为 Android 阵营提供了更标准化的锁机能力底座。</div>
+          </div>
+          <div class="r-src" data-url="https://android-developers.googleblog.com/2026/11/dmapi-v3-preview.html">Android Dev</div>
+          <div class="r-tags"><span class="tag">Google</span><span class="tag">DMAPI</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <!-- 来自原社媒巡检拆分:PAYG 拆解视频(YouTube) -->
+        <div class="row">
+          <div class="r-time">11-13</div>
+          <div class="r-body">
+            <div class="r-title" title="PAYG 设备拆解视频 播放集中增长(YouTube 跨平台引流)">"PAYG 设备拆解视频"播放集中增长(YouTube 跨平台引流)</div>
+            <div class="r-summary" title="YouTube 上数个 PAYG 设备拆解视频播放量集中增长,部分视频在描述区留下私域联系方式引流到 Telegram 和 WhatsApp,形成跨平台的灰产引流链;短期内无法直接下架,但可作为平台处置证据链留存。原属 07 社媒巡检,按技术主体(拆解)分入 06 技术与产品。">YouTube 上数个 PAYG 设备拆解视频播放量集中增长,部分视频在描述区留下私域联系方式引流到 Telegram 和 WhatsApp,形成跨平台的灰产引流链;短期内无法直接下架,但可作为平台处置证据链留存。原属 07 社媒巡检,按技术主体(拆解)分入 06 技术与产品。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/channel-redacted/youtube-payg-teardown-2026-11-13">YouTube</div>
+          <div class="r-tags"><span class="tag">YouTube</span><span class="tag">拆解</span><span class="tag">社媒</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-11</div>
+          <div class="r-body">
+            <div class="r-title" title="Samsung Knox Guard 4.2 增加 告警静默期">Samsung Knox Guard 4.2 增加"告警静默期"</div>
+            <div class="r-summary" title="Knox Guard 4.2 新增告警静默期控制项,运营商可按批次设置告警节奏,避免高频推送引发大规模客诉;该版本同时扩充了合规审计日志字段,为后续对接 FCA 与 CRA 合规审计留出接口,是三星在应对合规政策压力上的前置动作。">Knox Guard 4.2 新增告警静默期控制项,运营商可按批次设置告警节奏,避免高频推送引发大规模客诉;该版本同时扩充了合规审计日志字段,为后续对接 FCA 与 CRA 合规审计留出接口,是三星在应对合规政策压力上的前置动作。</div>
+          </div>
+          <div class="r-src" data-url="https://www.samsungknox.com/en/blog/knox-guard-4-2-release">Samsung</div>
+          <div class="r-tags"><span class="tag">Knox</span><span class="tag">固件</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-09</div>
+          <div class="r-body">
+            <div class="r-title" title="PAYG 行业风控模型联邦学习方案进入 PoC 阶段">PAYG 行业风控模型联邦学习方案进入 PoC 阶段</div>
+            <div class="r-summary" title="PAYG 行业多家玩家联合启动基于联邦学习的分期设备风控模型 PoC,目标是在不共享用户原始数据的前提下共建黑产画像与风险信号库;首批 PoC 覆盖东非两家运营商和一家 PAYG 平台,产出结果将决定明年是否扩展到泛非与东南亚。">PAYG 行业多家玩家联合启动基于联邦学习的分期设备风控模型 PoC,目标是在不共享用户原始数据的前提下共建黑产画像与风险信号库;首批 PoC 覆盖东非两家运营商和一家 PAYG 平台,产出结果将决定明年是否扩展到泛非与东南亚。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/industry/payg-federated-learning-poc-2026-11-09">业内交流</div>
+          <div class="r-tags"><span class="tag">联邦学习</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot"><div class="mod-foot-note">每页 5 条</div><nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>…</a><a>8</a><a>›</a></nav></div>
+    </section>
+
+    <!-- 07 社媒巡检 已删除,内容按主体对象拆分至 03 / 05 / 06 / 08 -->
+
+    <!-- 08 三星专档 -->
+    <section class="mod" data-mod="08" data-total="6" data-month="29">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">08</span><span class="sec-title">三星专档</span></div>
+        <span class="sec-count">近一月 29 · 本页 5 / 6</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23</div>
+          <div class="r-body">
+            <div class="r-title" title="MTN 续签三年协议,新增批量告警 API">MTN 续签三年协议,新增批量告警 API</div>
+            <div class="r-summary" title="MTN 向投资者披露与 Knox Guard 续签三年合作协议,新增批量告警 API 允许运营商按批次设置告警节奏与推送策略;续签基本锁死三星在非洲运营商侧的主导位,也给其他方案进入非洲市场设置了明确的时间窗约束。">MTN 向投资者披露与 Knox Guard 续签三年合作协议,新增批量告警 API 允许运营商按批次设置告警节奏与推送策略;续签基本锁死三星在非洲运营商侧的主导位,也给其他方案进入非洲市场设置了明确的时间窗约束。</div>
+          </div>
+          <div class="r-src" data-url="https://investors.mtn.com/announcements/2026-11-knox-guard-renewal">MTN Investor</div>
+          <div class="r-tags"><span class="tag">MTN</span><span class="tag">续签</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <!-- 来自原社媒巡检拆分:Knox Guard 解锁报价(Telegram) -->
+        <div class="row">
+          <div class="r-time">11-17</div>
+          <div class="r-body">
+            <div class="r-title" title="Knox Guard 解锁 报价帖 · 单台 45 USD(Telegram)">"Knox Guard 解锁"报价帖 · 单台 45 USD(Telegram)</div>
+            <div class="r-summary" title="监测到 Telegram 多个中英文频道同期出现单台 45 美元的 Knox Guard 解锁报价,话术结构、支付通道、截图模板高度一致,疑为同一团伙组织化外包;部分帖子已开始冒用三星和小米售后名义引流,建议纳入品牌保护重点处置清单并联动社媒方下架。原属 07 社媒巡检,按主体对象分入三星专档。">监测到 Telegram 多个中英文频道同期出现单台 45 美元的 Knox Guard 解锁报价,话术结构、支付通道、截图模板高度一致,疑为同一团伙组织化外包;部分帖子已开始冒用三星和小米售后名义引流,建议纳入品牌保护重点处置清单并联动社媒方下架。原属 07 社媒巡检,按主体对象分入三星专档。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/channel-redacted/telegram-knox-unlock-2026-11-17">渠道脱敏</div>
+          <div class="r-tags"><span class="tag">Telegram</span><span class="tag">话术</span><span class="tag">社媒</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-11</div>
+          <div class="r-body">
+            <div class="r-title" title="Knox Guard 4.2 新增告警静默期,避免高频推送">Knox Guard 4.2 新增告警静默期,避免高频推送</div>
+            <div class="r-summary" title="Knox Guard 4.2 固件在非洲运营商侧试运行两周,上线告警静默期后,客诉相关电话量下降 18%,副作用是部分预警响应时间延长;三星后续计划把该参数做成运营商自助配置项,让告警密度与风控强度可按渠道调整。">Knox Guard 4.2 固件在非洲运营商侧试运行两周,上线告警静默期后,客诉相关电话量下降 18%,副作用是部分预警响应时间延长;三星后续计划把该参数做成运营商自助配置项,让告警密度与风控强度可按渠道调整。</div>
+          </div>
+          <div class="r-src" data-url="https://www.samsungknox.com/en/blog/knox-guard-4-2-silence-window">Samsung</div>
+          <div class="r-tags"><span class="tag">Knox4.2</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-09</div>
+          <div class="r-body">
+            <div class="r-title" title="Knox Guard 合规团队对接 FCA 草案评估">Knox Guard 合规团队对接 FCA 草案评估</div>
+            <div class="r-summary" title="三星 Knox Guard 合规团队主动对接 FCA 草案起草组,就远程锁机触发条件、消费者告知口径、可撤回窗口交换意见;此举表明 Knox Guard 希望把自家产品特性融入监管语言,以减少未来合规改造的被动面。">三星 Knox Guard 合规团队主动对接 FCA 草案起草组,就远程锁机触发条件、消费者告知口径、可撤回窗口交换意见;此举表明 Knox Guard 希望把自家产品特性融入监管语言,以减少未来合规改造的被动面。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/industry/samsung-knox-fca-engagement-2026-11-09">业内交流</div>
+          <div class="r-tags"><span class="tag">FCA</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-06</div>
+          <div class="r-body">
+            <div class="r-title" title="Knox Guard 开始支持中端 A 系列机型">Knox Guard 开始支持中端 A 系列机型</div>
+            <div class="r-summary" title="Knox Guard 正式把支持矩阵扩展到中端 A 系列机型,针对东南亚和拉美下沉渠道推出轻量化部署包;对其他品牌而言是份额压力信号,特别是在印尼、巴西两地的 200-350 美元价位带,锁机能力将成为运营商选品的新门槛。">Knox Guard 正式把支持矩阵扩展到中端 A 系列机型,针对东南亚和拉美下沉渠道推出轻量化部署包;对其他品牌而言是份额压力信号,特别是在印尼、巴西两地的 200-350 美元价位带,锁机能力将成为运营商选品的新门槛。</div>
+          </div>
+          <div class="r-src" data-url="https://www.samsungknox.com/en/blog/knox-guard-a-series">Samsung</div>
+          <div class="r-tags"><span class="tag">A系列</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot"><div class="mod-foot-note">每页 5 条</div><nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>…</a><a>6</a><a>›</a></nav></div>
+    </section>
+
+    <!-- 09 电动车锁机条线 -->
+    <section class="mod" data-mod="09" data-total="3" data-month="14">
+      <div class="sec-head">
+        <div class="sec-left"><span class="sec-no">09</span><span class="sec-title">电动车锁机条线</span></div>
+        <span class="sec-count">近一月 14 · 本页 5 / 3</span>
+      </div>
+      <div class="row-head"><div>时间</div><div>标题</div><div>摘要</div><div>来源</div><div>关键字</div><div>动作</div></div>
+      <div class="rows">
+
+        <div class="row">
+          <div class="r-time">11-23</div>
+          <div class="r-body">
+            <div class="r-title" title="Bajaj Auto Finance 宣布电动两轮分期锁机试点">Bajaj Auto Finance 宣布电动两轮分期锁机试点</div>
+            <div class="r-summary" title="Bajaj Auto Finance 正式宣布电动两轮分期锁机试点,首批覆盖印度三城的本地两轮车品牌,锁机能力包括远程限程、限速和启动锁;该试点与 Bajaj Finance 和小米印度的锁机能力技术评估存在外溢潜力,是小米后续向两轮车业务外延的潜在入口。">Bajaj Auto Finance 正式宣布电动两轮分期锁机试点,首批覆盖印度三城的本地两轮车品牌,锁机能力包括远程限程、限速和启动锁;该试点与 Bajaj Finance 和小米印度的锁机能力技术评估存在外溢潜力,是小米后续向两轮车业务外延的潜在入口。</div>
+          </div>
+          <div class="r-src" data-url="https://www.bajajauto.com/press/2026-11-18-ev-installment-pilot">Bajaj</div>
+          <div class="r-tags"><span class="tag">两轮</span><span class="tag">Bajaj</span><span class="tag">印度</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-17</div>
+          <div class="r-body">
+            <div class="r-title" title="某东亚主机厂发布分期车机锁机能力白皮书(摘要)">某东亚主机厂发布分期车机锁机能力白皮书(摘要)</div>
+            <div class="r-summary" title="东亚某主机厂发布分期车机锁机能力白皮书摘要,披露其权限分级设计、异常解锁 SOP 和与车联网服务的联动机制,并给出合规沙盒与客诉指标两项考核;是东亚 OEM 首次系统性对外披露车机锁机能力的材料,值得作为行业基线对照。">东亚某主机厂发布分期车机锁机能力白皮书摘要,披露其权限分级设计、异常解锁 SOP 和与车联网服务的联动机制,并给出合规沙盒与客诉指标两项考核;是东亚 OEM 首次系统性对外披露车机锁机能力的材料,值得作为行业基线对照。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/oem/ea-vehicle-lock-whitepaper-2026-11-17">官方</div>
+          <div class="r-tags"><span class="tag">白皮书</span><span class="tag">东亚</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-15</div>
+          <div class="r-body">
+            <div class="r-title" title="北美某主机厂 OTA 更新加入 分期停电状态 独立锁定链路">北美某主机厂 OTA 更新加入"分期停电状态"独立锁定链路</div>
+            <div class="r-summary" title="北美某主机厂在最新一次 OTA 更新中加入分期停电状态独立锁机链路,支持与主刹车、电驱、娱乐系统的权限解耦;该设计直接响应加州 AB-1234 对锁机独立性的要求,预计后续其他北美主机厂会陆续跟进。">北美某主机厂在最新一次 OTA 更新中加入分期停电状态独立锁机链路,支持与主刹车、电驱、娱乐系统的权限解耦;该设计直接响应加州 AB-1234 对锁机独立性的要求,预计后续其他北美主机厂会陆续跟进。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/industry/na-oem-ota-independent-lock-2026-11-15">业内交流</div>
+          <div class="r-tags"><span class="tag">OTA</span><span class="tag">停电</span><span class="tag">北美</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-14</div>
+          <div class="r-body">
+            <div class="r-title" title="德国某汽车金融机构更新锁机触发矩阵">德国某汽车金融机构更新锁机触发矩阵</div>
+            <div class="r-summary" title="德国某汽车金融机构更新锁机触发矩阵,在硬锁之外新增软限速和软限程两档中间状态,允许在逾期早期采用更温和的提示与限制而非直接停用;该做法与 FCA 草案方向一致,是欧洲汽车金融机构主动对齐监管意图的典型案例。">德国某汽车金融机构更新锁机触发矩阵,在硬锁之外新增软限速和软限程两档中间状态,允许在逾期早期采用更温和的提示与限制而非直接停用;该做法与 FCA 草案方向一致,是欧洲汽车金融机构主动对齐监管意图的典型案例。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/industry/de-auto-finance-lock-matrix-2026-11-14">业内交流</div>
+          <div class="r-tags"><span class="tag">软限制</span><span class="tag">欧洲</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+        <div class="row">
+          <div class="r-time">11-10</div>
+          <div class="r-body">
+            <div class="r-title" title="肯尼亚两轮电动车 PAYG 平台装机破百万">肯尼亚两轮电动车 PAYG 平台装机破百万</div>
+            <div class="r-summary" title="肯尼亚本地两轮电动车 PAYG 平台装机数在 11 月破百万,是本月非洲电动车锁机条线最亮的动态;该平台走的是极轻量 PAYG 锁机加本地能源补贴的组合模式,具备向坦桑尼亚和乌干达复制的条件,可能成为非洲电动两轮车普及的加速器。">肯尼亚本地两轮电动车 PAYG 平台装机数在 11 月破百万,是本月非洲电动车锁机条线最亮的动态;该平台走的是极轻量 PAYG 锁机加本地能源补贴的组合模式,具备向坦桑尼亚和乌干达复制的条件,可能成为非洲电动两轮车普及的加速器。</div>
+          </div>
+          <div class="r-src" data-url="https://example.com/industry/ke-ev-payg-1m-2026-11-10">业内交流</div>
+          <div class="r-tags"><span class="tag">PAYG</span><span class="tag">两轮</span><span class="tag">非洲</span></div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>
+
+      </div>
+      <div class="mod-foot"><div class="mod-foot-note">每页 5 条</div><nav class="pager"><a>‹</a><span class="cur">1</span><a>2</a><a>3</a><a>›</a></nav></div>
+    </section>
+
+  </div>
+
+  <footer class="page-foot">
+    <div id="foot-stamp">锁机行业舆情监控 · 每日看板 · 2026-11-23</div>
+    <div>点击标题 → 右侧抽屉详情 · 动作列 ↗ → 原文外链</div>
+  </footer>
+
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-mask" id="drawerMask"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-hidden="true">
+  <div class="drawer-head">
+    <h3 id="drawerTitle">—</h3>
+    <button class="drawer-close" id="drawerClose" aria-label="关闭">×</button>
+  </div>
+  <div class="drawer-meta">
+    <div>栏目 <b id="drawerMod">—</b></div>
+    <div>时间 <b id="drawerTime">—</b></div>
+    <div>来源 <b id="drawerSrc">—</b></div>
+    <div>ID <b id="drawerId">—</b></div>
+  </div>
+  <div class="drawer-tags" id="drawerTags"></div>
+  <div class="drawer-body" id="drawerBody">—</div>
+  <div class="drawer-foot">
+    <button class="btn lg" id="drawerCloseBtn">关闭</button>
+    <a class="btn primary lg" id="drawerOrig" target="_blank" rel="noopener noreferrer">↗ 原文链接</a>
+  </div>
+</aside>
+
+<script>
+(function(){
+  // ============== 配置:今日日期(由 Autopilot 每日注入,此处为当前基准) ==============
+  const TODAY = '2026-11-23';   // YYYY-MM-DD,Autopilot 刷新时同时改写此变量与 r-time
+  const YEAR  = TODAY.slice(0,4);
+
+  // ============== 翻页逻辑(沿用 V15) ==============
+  const originalRows = new Map();
+  const currentPage = new Map();
+
+  // 当前视图状态
+  let viewMode = 'today';   // 'today' | 'all'
+  let dateFilter = '';       // '' | 'YYYY-MM-DD'
+
+  function buildMockRows(mod, page){
+    const startIdx = (page - 1) * 5;
+    const seedTitles = {
+      '01': ['M-KOPA 周度 PAYG 装机数披露', 'Reuters 调查 新兴市场锁机占比', 'Bloomberg 消费金融专题', 'Nikkei Asia 东南亚锁机综述', 'AP News 分期手机风控报道'],
+      '02': ['Pantip 用户吐槽锁机体验', 'AIS 发布泰语合规告知示例', 'True 调整锁机 SOP', 'Bangkok Post 行业回顾', 'Lazada 泰国站补充销量数据'],
+      '03': ['小米印尼锁机 SDK 月度报告', '小米海外分部 招聘数据分析岗', '小米锁机 SDK 3.3 回滚记录', '小米非洲 PAYG 场景测试', '小米天星数科 合规专题'],
+      '04': ['BaFin 发布锁机能力征询意见', 'RBI 对 EMI 披露要求更新', 'OJK 补充锁机 SDK 第三方名单', 'SEC 对分期披露的声明', 'BACEN 二次解读 KYC 口径'],
+      '05': ['尼日利亚分期锁机 Punch NG 报道', '巴西 MercadoLibre 分期数据', '肯尼亚 Jumia 装机占比', '印度 Flipkart 锁机机型分析', '菲律宾 Daraz 分期套餐变动'],
+      '06': ['Knox Guard API 新增批量告警', 'Find My 服务端行为更新', 'Android Enterprise 锁机场景补充', 'OEM 固件披露条款解读', '联邦学习 用于分期风控'],
+      '08': ['Samsung 印度锁机能力更新', 'Samsung 东南亚 Knox Guard 培训', 'Samsung 新品 Note 锁机测试', 'Samsung 非洲运营商协议续签', 'Samsung Knox Matrix 行业白皮书'],
+      '09': ['电动车 PAYG 模型在东非试点', '两轮车分期锁机合约样本', 'Bajaj Auto Finance 外溢可能性复盘', '印度电动三轮车锁机 SDK 装机', 'M-KOPA 两轮车专项评估']
+    };
+    const seedSources = {
+      '01': ['Reuters', 'Bloomberg', 'Nikkei Asia', 'AP News', '9to5Mac'],
+      '02': ['Pantip', 'Bangkok Post', 'The Nation', 'Lazada', 'AIS / TrueID'],
+      '03': ['小米产品日报', '印度分部', '合规周报', '招聘平台', '国知局'],
+      '04': ['BaFin', 'RBI', 'OJK', 'SEC', 'BACEN'],
+      '05': ['Punch NG', 'MercadoLibre', 'Jumia', 'Flipkart', 'Daraz'],
+      '06': ['Samsung Knox', 'Apple', 'Google AE', '欧盟委员会', 'arXiv'],
+      '08': ['Samsung 印度', 'Samsung ASEAN', 'Samsung 全球', 'MTN Investor', 'Samsung 白皮书'],
+      '09': ['M-KOPA Press', '编辑部', 'Bajaj Finance', '印度分部', '区域合作方']
+    };
+    const seedTags = {
+      '01': [['M-KOPA','PAYG'],['Reuters','调研'],['Bloomberg'],['东南亚'],['美国']],
+      '02': [['Pantip'],['AIS','合规'],['True'],['Bangkok Post'],['Lazada','电商']],
+      '03': [['印尼'],['招聘'],['SDK3.3'],['非洲'],['天星']],
+      '04': [['BaFin','德国'],['RBI','印度'],['OJK','印尼'],['SEC','美国'],['BACEN','巴西']],
+      '05': [['尼日利亚'],['巴西'],['肯尼亚'],['印度'],['菲律宾']],
+      '06': [['Knox'],['Apple'],['Android'],['欧盟','CRA'],['联邦学习']],
+      '08': [['Samsung','印度'],['Knox'],['新品'],['MTN'],['白皮书']],
+      '09': [['PAYG','东非'],['合约'],['Bajaj'],['印度','三轮车'],['M-KOPA']]
+    };
+
+    const titles = seedTitles[mod] || ['历史条目 A','历史条目 B','历史条目 C','历史条目 D','历史条目 E'];
+    const sources = seedSources[mod] || ['历史来源','历史来源','历史来源','历史来源','历史来源'];
+    const tags = seedTags[mod] || [['历史'],['历史'],['历史'],['历史'],['历史']];
+
+    const baseDay = 18 - startIdx;
+    const html = [];
+    for(let i = 0; i < 5; i++){
+      const d = baseDay - i;
+      let mm = 11, dd = d;
+      if(dd <= 0){ mm = 10; dd = 31 + dd; }
+      if(mm === 10 && dd <= 0){ mm = 9; dd = 30 + dd; }
+      if(dd <= 0){ mm = 8; dd = 31 + dd; }
+      const timeStr = `${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+      const title = `${titles[i]} · 第 ${page} 页 #${startIdx + i + 1}`;
+      const summary = `历史归档条目示例,来自 configs/sources.yaml 保留 365 天的回溯数据。此为 mock 占位,正式后端上线后按 {模块id:${mod}, 页码:${page}} 返回真实条目。`;
+      const src = sources[i];
+      const tagList = tags[i].map(t => `<span class="tag">${t}</span>`).join('');
+      const archiveUrl = `https://example.com/archive/m${mod}/p${page}/r${i + 1}`;
+      html.push(`
+        <div class="row">
+          <div class="r-time">${timeStr}</div>
+          <div class="r-body">
+            <div class="r-title" title="${title}">${title}</div>
+            <div class="r-summary" title="${summary}">${summary}</div>
+          </div>
+          <div class="r-src" data-url="${archiveUrl}">${src}</div>
+          <div class="r-tags">${tagList}</div>
+          <div class="r-act"><button class="btn" data-act="orig" title="原文链接">↗ 原文链接</button></div>
+        </div>`);
+    }
+    return html.join('');
+  }
+
+  function buildPagerHTML(cur, total){
+    const parts = [];
+    parts.push(`<a class="nav prev${cur === 1 ? ' disabled' : ''}" data-page="${cur - 1}">‹</a>`);
+    const pages = new Set([1, total, cur, cur - 1, cur + 1]);
+    const sorted = [...pages].filter(p => p >= 1 && p <= total).sort((a,b) => a - b);
+    let prev = 0;
+    for(const p of sorted){
+      if(p - prev > 1) parts.push(`<span class="dots">…</span>`);
+      if(p === cur) parts.push(`<span class="cur">${p}</span>`);
+      else parts.push(`<a data-page="${p}">${p}</a>`);
+      prev = p;
+    }
+    parts.push(`<a class="nav next${cur === total ? ' disabled' : ''}" data-page="${cur + 1}">›</a>`);
+    return parts.join('');
+  }
+
+  function goPage(section, page){
+    const mod = section.dataset.mod;
+    const total = parseInt(section.dataset.total, 10);
+    const month = section.dataset.month;
+    if(page < 1 || page > total) return;
+
+    const rows = section.querySelector('.rows');
+    if(page === 1){
+      rows.innerHTML = originalRows.get(mod);
+    }else{
+      rows.innerHTML = buildMockRows(mod, page);
+    }
+
+    // 为新渲染的 row 补 data-item-id / data-url(来自内部 .r-src[data-url])
+    assignRowIds(section);
+
+    const secCount = section.querySelector('.sec-count');
+    if(secCount) secCount.textContent = `近一月 ${month} · 本页 ${page} / ${total}`;
+
+    const pager = section.querySelector('.pager');
+    if(pager) pager.innerHTML = buildPagerHTML(page, total);
+
+    currentPage.set(mod, page);
+
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: sectionTop - 20, behavior: 'smooth' });
+  }
+
+  // ============== 为每行分配 item-id 与 url + 索引到 sessionStorage ==============
+  function assignRowIds(section){
+    const mod = section.dataset.mod;
+    const page = currentPage.get(mod) || 1;
+    const rows = section.querySelectorAll('.rows > .row');
+    rows.forEach((row, idx) => {
+      const itemId = `m${mod}-p${page}-r${String(idx + 1).padStart(2, '0')}`;
+      row.dataset.itemId = itemId;
+      const srcEl = row.querySelector('.r-src');
+      const srcUrl = srcEl ? srcEl.dataset.url : '';
+      row.dataset.url = srcUrl || '';
+
+      // 把该行数据索引到 sessionStorage,供 item.html 读取
+      const titleEl = row.querySelector('.r-title');
+      const timeEl = row.querySelector('.r-time');
+      const summaryEl = row.querySelector('.r-summary');
+      const tagsEls = row.querySelectorAll('.r-tags .tag');
+      const payload = {
+        id: itemId,
+        modId: mod,
+        title: (titleEl?.getAttribute('title') || titleEl?.textContent || '').trim(),
+        summary: (summaryEl?.getAttribute('title') || summaryEl?.textContent || '').trim(),
+        source: (srcEl?.textContent || '').trim(),
+        url: srcUrl || '',
+        time: (timeEl?.textContent || '').trim(),
+        tags: Array.from(tagsEls).map(t => t.textContent.trim())
+      };
+      try{ sessionStorage.setItem('item:' + itemId, JSON.stringify(payload)); } catch(e){}
+    });
+  }
+
+  // ============== 跳转到详情页(改为抽屉) ==============
+  function goDetail(row){
+    const itemId = row.dataset.itemId || '—';
+    const titleEl = row.querySelector('.r-title');
+    const timeEl  = row.querySelector('.r-time');
+    const summaryEl = row.querySelector('.r-summary');
+    const srcEl   = row.querySelector('.r-src');
+    const tagsEls = row.querySelectorAll('.r-tags .tag');
+    const url     = row.dataset.url || '';
+    const sectionTitle = row.closest('section.mod')?.querySelector('.sec-title')?.textContent?.trim() || '—';
+
+    document.getElementById('drawerTitle').textContent = (titleEl?.getAttribute('title') || titleEl?.textContent || '').trim();
+    document.getElementById('drawerMod').textContent  = sectionTitle;
+    document.getElementById('drawerTime').textContent = (timeEl?.textContent || '').trim();
+    document.getElementById('drawerSrc').textContent  = (srcEl?.textContent || '').trim();
+    document.getElementById('drawerId').textContent   = itemId;
+    document.getElementById('drawerTags').innerHTML   = Array.from(tagsEls).map(t => `<span class="tag">${t.textContent.trim()}</span>`).join('');
+    const summary = (summaryEl?.getAttribute('title') || summaryEl?.textContent || '').trim();
+    document.getElementById('drawerBody').innerHTML = summary
+      ? summary.split(/。\s*/).filter(Boolean).map(p => `<p style="margin:0 0 12px">${p}。</p>`).join('')
+      : '<p style="color:var(--ink-4)">无摘要。</p>';
+    const origBtn = document.getElementById('drawerOrig');
+    if(url){ origBtn.href = url; origBtn.style.display = ''; }
+    else   { origBtn.removeAttribute('href'); origBtn.style.display = 'none'; }
+
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawerMask').classList.add('open');
+    document.getElementById('drawer').setAttribute('aria-hidden','false');
+  }
+  function closeDrawer(){
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawerMask').classList.remove('open');
+    document.getElementById('drawer').setAttribute('aria-hidden','true');
+  }
+  document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+  document.getElementById('drawerCloseBtn').addEventListener('click', closeDrawer);
+  document.getElementById('drawerMask').addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
+
+  // 事件委托:标题点击 → 详情页;↗ → 新窗口原文;▸ → 详情页
+  document.body.addEventListener('click', e => {
+    // 分页按钮已有独立 handler,这里跳过
+    if(e.target.closest('.pager')) return;
+
+    const origBtn = e.target.closest('[data-act="orig"]');
+    if(origBtn){
+      if(origBtn.classList.contains('disabled')) return;
+      const row = origBtn.closest('.row');
+      const url = row?.dataset?.url;
+      if(url) window.open(url, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    const detailBtn = e.target.closest('[data-act="detail"]');
+    if(detailBtn){
+      const row = detailBtn.closest('.row');
+      if(row) goDetail(row);
+      return;
+    }
+
+    const title = e.target.closest('.r-title');
+    if(title){
+      const row = title.closest('.row');
+      if(row) goDetail(row);
+      return;
+    }
+  });
+
+  // ============== 初始化 ==============
+  // 把每条 r-time 文本("11-18"或"11-18 07:12") 解析为 YYYY-MM-DD,写入 row.dataset.date
+  function normalizeRowDate(row){
+    const t = row.querySelector('.r-time')?.textContent?.trim() || '';
+    const m = t.match(/^(\d{1,2})-(\d{1,2})/);
+    if(!m) return;
+    const mm = m[1].padStart(2,'0'), dd = m[2].padStart(2,'0');
+    // 默认年份 = TODAY 年份;若月份大于当前月,视为上一年
+    const curMonth = parseInt(TODAY.slice(5,7), 10);
+    const rowMonth = parseInt(mm, 10);
+    const year = rowMonth > curMonth ? (parseInt(YEAR,10) - 1) : parseInt(YEAR, 10);
+    row.dataset.date = `${year}-${mm}-${dd}`;
+  }
+
+  document.querySelectorAll('section.mod[data-mod]').forEach(section => {
+    const mod = section.dataset.mod;
+    const total = parseInt(section.dataset.total, 10);
+    const rows = section.querySelector('.rows');
+    originalRows.set(mod, rows.innerHTML);
+    currentPage.set(mod, 1);
+
+    assignRowIds(section);
+    section.querySelectorAll('.rows > .row').forEach(normalizeRowDate);
+
+    // 让标题看起来可点击
+    section.querySelectorAll('.r-title').forEach(t => { t.style.cursor = 'pointer'; });
+
+    const pager = section.querySelector('.pager');
+    if(pager) pager.innerHTML = buildPagerHTML(1, total);
+
+    section.querySelector('.mod-foot').addEventListener('click', e => {
+      const t = e.target.closest('a[data-page]');
+      if(!t || t.classList.contains('disabled')) return;
+      const page = parseInt(t.dataset.page, 10);
+      if(Number.isFinite(page)){
+        goPage(section, page);
+        // 翻页后重新规范日期并应用过滤
+        section.querySelectorAll('.rows > .row').forEach(normalizeRowDate);
+        applyFilter();
+      }
+    });
+  });
+
+  // ============== 视图切换 / 日期筛选 ==============
+  function applyFilter(){
+    let todayCount = 0;
+    document.querySelectorAll('section.mod[data-mod]').forEach(section => {
+      const mod = section.dataset.mod;
+      const rows = section.querySelectorAll('.rows > .row');
+      let visibleCount = 0;
+      rows.forEach(row => {
+        const d = row.dataset.date || '';
+        row.classList.remove('today','hidden');
+        if(d === TODAY) row.classList.add('today');
+
+        let show = true;
+        if(dateFilter){
+          show = (d === dateFilter);
+        } else if(viewMode === 'today'){
+          show = (d === TODAY);
+        }
+        if(!show) row.classList.add('hidden');
+        else {
+          visibleCount++;
+          if(d === TODAY) todayCount++;
+        }
+      });
+
+      // 若当前视图下该栏目无可见条目,展示占位
+      let empty = section.querySelector('.mod-empty');
+      if(visibleCount === 0){
+        if(!empty){
+          empty = document.createElement('div');
+          empty.className = 'mod-empty';
+          empty.textContent = '当前视图下无条目(占位)';
+          section.querySelector('.rows').after(empty);
+        }
+        empty.style.display = '';
+      } else if(empty){
+        empty.style.display = 'none';
+      }
+    });
+    const metaC = document.getElementById('meta-today-count');
+    if(metaC) metaC.textContent = String(todayCount);
+  }
+
+  document.querySelectorAll('.vs-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.vs-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      viewMode = tab.dataset.view;
+      // 切换视图时清掉日期筛选
+      dateFilter = '';
+      document.getElementById('dateFilter').value = '';
+      applyFilter();
+    });
+  });
+  document.getElementById('dateFilter').addEventListener('change', e => {
+    dateFilter = e.target.value || '';
+    applyFilter();
+  });
+  document.getElementById('dateReset').addEventListener('click', () => {
+    dateFilter = '';
+    document.getElementById('dateFilter').value = '';
+    applyFilter();
+  });
+
+  // 首次应用:默认今日视图
+  applyFilter();
+})();
+</script>
+
+</body>
+</html>
