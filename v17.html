@@ -189,8 +189,8 @@
   <!-- VIEW SWITCH -->
   <section class="view-switch">
     <div class="vs-tabs" role="tablist">
-      <button class="vs-tab active" data-view="today">今日新增</button>
-      <button class="vs-tab" data-view="all">累积归档</button>
+      <button class="vs-tab" data-view="today">今日新增</button>
+      <button class="vs-tab active" data-view="all">累积归档</button>
     </div>
     <div class="vs-filter">
       <label>日期筛选
@@ -3285,7 +3285,7 @@
   const currentPage = new Map();
 
   // 当前视图状态
-  let viewMode = 'today';   // 'today' | 'all'
+  let viewMode = 'all';     // 'today' | 'all'
   let dateFilter = '';       // '' | 'YYYY-MM-DD'
 
   function buildMockRows(mod, page){
