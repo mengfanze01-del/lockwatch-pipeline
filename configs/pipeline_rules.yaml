@@ -1,0 +1,83 @@
+# LockWatch 入库与看板映射规则
+# 来源：device-lock-installment-weekly-report skill (c0fc1dab-9648-46a8-a50b-bca8a8891285)
+# 仅覆盖对看板抓取/入库能力有直接增益的部分;写作模板、飞书交付、业务启示必写项等周报 SOP 已剔除
+# 参见 keywords.yaml / sources.yaml 的关联字段
+
+version: 1
+
+# ========================================
+# 去重与交叉验证（skill §3）
+# ========================================
+dedupe_and_verify:
+  dedupe:
+    rule: 同一事件只保留一条,合并信息点
+    cover: [跨天, 跨源]
+  cross_verify:
+    required_fields:
+      - 出货量
+      - 均价
+      - 分期渗透率
+      - 放款额
+      - 监管阈值
+      - 罚款金额
+    min_sources: 2
+    description: 关键数字必须跨来源交叉核对
+  conflict_resolution:
+    primary: official_or_firsthand
+    fallback_label: "据报 / 待确认"
+
+# ========================================
+# 筛选与分级门槛（skill §4）
+# ========================================
+intake_gate:
+  must_have_numbers:
+    description: 每条必须给数字（金额、比例、时间点、覆盖量）;缺数字的动态降级或合并
+    missing_number_action: downgrade_or_merge
+  no_change_policy:
+    description: 窗口内某玩家/某市场确无公开信息,直接写「无新增动态」占位,不做推测性补全
+    placeholder_text: "无新增动态"
+  new_vs_background:
+    description: 历史数据、旧事件延续标注「背景延续 / 背景数据」,不与新增新闻混排
+    label: "背景延续"
+  exclusions:
+    - 与设备分期无关的泛科技/宏观新闻
+    - 无业务含义的纯融资快讯（锁机赛道玩家除外）
+    - 无法验证来源的内容（内容农场、无出处爆料）
+
+# ========================================
+# 看板 8 栏 ↔ skill 主线映射（skill §6）
+# 周报是四主线 + 业务启示,看板是 8 栏日度舆情;按本表映射,不照搬周报章节结构
+# ========================================
+board_section_mapping:
+  "01":
+    name: 今日信息流
+    skill_lane: 玩家动态（非品牌专属）
+  "02":
+    name: 今日泰国锁机
+    skill_lane: 泰国相关（BOT/AIS/True/电商泰站）
+  "03":
+    name: 小米锁机
+    skill_lane: 小米/天星相关
+  "04":
+    name: 监管与合规
+    skill_lane: 监管与合规
+  "05":
+    name: 区域市场
+    skill_lane: 区域市场/数据
+  "06":
+    name: 技术与产品
+    skill_lane: 技术与产品（TEE/DLC/解锁攻防）
+  "08":
+    name: 三星专档
+    skill_lane: 三星/Knox/KG Lock + 解锁黑产
+  "09":
+    name: 电动车锁机条线
+    skill_lane: 车辆/电动车锁机
+
+# ========================================
+# 不适用部分（skill §7 明确声明不加）
+# ========================================
+not_applicable:
+  - 写作模板（六章结构、期号管理、5 条核心要点限制、6000-12000 字符篇幅）
+  - 飞书交付四件套（本地 md + 云文档 + wiki 登记 + DM）
+  - "对小米/天星数科的启示"必写项（看板是信息流,不强制观点输出）

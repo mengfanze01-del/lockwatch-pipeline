@@ -11,6 +11,11 @@
 #   url         : 抓取入口；search 型给查询模板，{q} 占位
 #   enabled     : 是否启用
 #   rate_limit  : 每轮最多抓取条目（0 表示无上限）
+#   tier        : 信源分级（源自 device-lock-installment-weekly-report skill §3.2）
+#                 tier1 = 一手来源（公司 Newsroom / 官方博客 / 监管机构官网）
+#                 tier2 = 权威研究机构 / 垂媒（IDC/Omdia/Counterpoint/GSMA/区域科技媒体）
+#                 tier3 = 知名财经媒体
+#                 同一事件优先取 tier 低者；关键结论和数据必须附来源链接
 #   notes       : 备注
 
 version: 1
@@ -772,3 +777,117 @@ sources:
     url: https://x.com/heyitsyogesh
     enabled: true
     rate_limit: 30
+
+# ========================================
+# 信源分级映射（源自 device-lock-installment-weekly-report skill §3.2）
+# 抓取优先采信顺序：tier1 > tier2 > tier3
+# 同一事件优先取 tier 更小者；无 tier1 来源时标明媒体名；关键结论和数据必须附来源链接
+# ========================================
+tier_map:
+  tier1:
+    description: 一手来源 - 公司 Newsroom / 官方博客 / 监管机构官网
+    source_ids:
+      - xiaomi-global-blog
+      - samsung-newsroom-global
+      - samsung-newsroom-in
+      - oppo-global-newsroom
+      - vivo-global-news
+      - honor-global-news
+      - tecno-global-news
+      - infinix-global-news
+      - itel-global-news
+      - mi-community-global
+      - samsung-members-global
+      - fcc-equipment-auth
+      - tdra-uae
+      - bis-india
+      - tkdn-id
+      - nbtc-th
+      - anatel-br
+      - rostest-ru
+    external_tier1_sources:  # 非当前 sources 列表,待新增
+      - "PayJoy Newsroom"
+      - "Samsung Newsroom India"
+      - "Trustonic Blog"
+      - "M-KOPA Press"
+      - "传音公告"
+      - "RBI 官网"
+      - "OJK 官网"
+      - "CBK 官网"
+      - "CBN 官网"
+      - "NCC 官网"
+      - "BOT (Bank of Thailand) 官网"
+      - "FCA.gov.uk"
+  tier2:
+    description: 权威研究机构 / 垂媒 - IDC/Omdia/Counterpoint/GSMA/区域科技媒体
+    source_ids:
+      - gsmarena-news
+      - androidauthority
+      - androidpolice
+      - 9to5google
+      - xda-developers
+      - gizmochina
+      - 91mobiles
+      - gadgets360
+      - smartprix
+      - mysmartprice
+      - ndtv-gadgets-hi
+      - droidsans
+      - beartai
+      - specphone
+      - hitech-mail-ru
+      - 4pda
+      - trashbox
+      - xataka-movil
+      - andro4all
+      - gizmodo-es
+      - alarabiya-tech
+      - aitnews
+      - unlockboot-ar
+    external_tier2_sources:  # 待新增
+      - "IDC"
+      - "Omdia"
+      - "Counterpoint"
+      - "GSMA"
+      - "Strategy Analytics"
+      - "TechCabal"
+      - "Tech-ish"
+      - "WeeTracker"
+      - "Business Matters"
+      - "BW Businessworld"
+      - "Economic Times"
+  tier3:
+    description: 知名财经媒体
+    source_ids:
+      - theverge-mobile
+      - engadget-mobile
+      - techcrunch-mobile
+
+# ========================================
+# 地理与主题权重（源自 skill §5）
+# 抓取/排序时作为加权因子
+# ========================================
+region_weights:
+  africa: 1.0       # 肯尼亚/尼日利亚（PAYG 大本营）
+  south_asia: 0.9   # 印度
+  sea: 0.8          # 印尼/泰国/菲律宾/越南
+  latam: 0.7        # 巴西/墨西哥/委内瑞拉/哥伦比亚
+  north_africa: 0.6 # 摩洛哥
+  china: 0.6        # 政策外溢
+  xiaomi_overseas_boost: 0.2  # 小米海外重点市场（印度、东南亚、拉美、非洲）单独加权
+
+automotive_regions_full_coverage:
+  - africa
+  - sea
+  - europe
+  - middle_east
+  - eastern_europe
+  - russia
+  - east_asia
+  - south_asia
+
+high_priority_targets:
+  - id: samsung_knox_guard
+    display: 三星 KG Lock（全球被破解最多的融资锁）
+    section: "08"
+    note: 对应看板 08 栏需保持高优先级,含破解生态威胁情报条目
